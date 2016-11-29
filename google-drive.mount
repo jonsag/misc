@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# this requires the following to be done
+# according to http://xmodulo.com/mount-google-drive-linux.html
+# combined with https://github.com/astrada/google-drive-ocamlfuse/wiki
+
+##### prerequisites #####
+# # equo install dev-ml/ocurl dev-ml/ocamlnet dev-ml/cryptokit \
+#	       	dev-ml/extlib dev-ml/xmlm dev-ml/ocaml-sqlite3
+
+# # equo install dev-ml/opam sys-devel/m4 net-misc/curl sys-fs/fuse \
+#		dev-db/sqlite dev-ml/camlp5 sys-devel/make dev-lang/ocaml
+
+# # equo install hg darcs aspcud
+
+# these, I hope, won't be needed...
+# dev-ml/yojson
+# dev-ml/gapi-ocaml
+# dev-ml/ocamlfuse
+
+##### installation #####
+# $ opan init
+# $ opam update
+# $ opam install google-drive-ocamlfuse
+
+
+#google-drive-ocamlfuse -o from_code=iso8859-1 ~/googledrive
+google-drive-ocamlfuse ~/googledrive

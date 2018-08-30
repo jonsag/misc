@@ -1,19 +1,34 @@
 #!/bin/bash
 
-BOOKSDIR="/home/jon/Calibre Library"
-GOOGLEDIR="/home/jon/googledrive/Calibre Library"
-SERVERDIR="root@amd64-4400:/home/mythtv/Calibre\ Library"
+SERVER="192.168.10.6"
+
+BOOKSDIR="/home/jon/Documents/CalibreLibrary"
+GOOGLEDIR="/home/jon/GoogleDrive/CalibreLibrary"
+SERVERDIR="root@$SERVER:/home/mythtv/Calibre\ Library"
 
 #OPTIONS="-avzh --progress --delete"
 #EXCLUDE="--exclude metadata.db metadata_db_prefs_backup.json"
 
 GOOGLEOPTIONS="-ruvzh --progress --delete"
-GOOGLEEXCLUDE=""
-GOOGLEEXCLUDE="--exclude=*.original_epub"
-GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.cbr"
-GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.cbz"
-GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.rtf"
-GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.pdf"
+
+GOOGLEINCLUDE="--include '*/'"
+GOOGLEINCLUDE="$GOOGLEINCLUDE --include '*.epub'"
+GOOGLEINCLUDE="$GOOGLEINCLUDE --include 'metadata.opf'"
+GOOGLEINCLUDE="$GOOGLEINCLUDE --include 'cover.jpg'"
+
+#GOOGLEEXCLUDE="--exclude=*"
+
+GOOGLEEXCLUDE="--exclude '*'"
+#GOOGLEEXCLUDE="--exclude=*.original_epub"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.cbr"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.cbz"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.rtf"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.pdf"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.azw3"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.lit"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.mobi"
+#GOOGLEEXCLUDE="$GOOGLEEXCLUDE --exclude=*.zip"
+
 GOOGLEMAXSIZE="--max-size=10M"
 
 SERVEROPTIONS="-pruvzh --progress --delete"
@@ -27,13 +42,13 @@ SERVERUSERMAP=""
 SERVERGOUPMAP=""
 #SERVEREXCLUDE="--exclude·'*.original_epub'·'*.cbr'"
 
-#echo
-#echo "Syncing $BOOKSDIR with $GOOGLEDIR ..."
-#echo "----------------------------------------------------------------------------"
-#echo
+echo
+echo "Syncing $BOOKSDIR with $GOOGLEDIR ..."
+echo "----------------------------------------------------------------------------"
+echo
 
-#echo "rsync $GOOGLEOPTIONS $GOOGLEEXCLUDE $GOOGLEMAXSIZE $BOOKSDIR/* $GOOGLEDIR/"
-#rsync $GOOGLEOPTIONS $GOOGLEEXCLUDE $GOOGLEMAXSIZE "$BOOKSDIR"/* "$GOOGLEDIR"/
+echo "rsync $GOOGLEOPTIONS $GOOGLEINCLUDE $GOOGLEEXCLUDE $GOOGLEMAXSIZE $BOOKSDIR/* $GOOGLEDIR/"
+#rsync $GOOGLEOPTIONS $GOOGLEINCLUDE $GOOGLEEXCLUDE $GOOGLEMAXSIZE "$BOOKSDIR"/* "$GOOGLEDIR"/
 
 echo
 echo "Syncing $BOOKSDIR with $SERVERDIR ..."
@@ -45,4 +60,5 @@ rsync $SERVEROPTIONS $SERVEREXCLUDE $SERVERCHOWN $SERVERUSERMAP $SERVERGROUPMAP 
 
 echo
 echo "Setting owner to $SERVERUSER and group to $SERVERGROUP for top .db-file..."
-ssh root@amd64-4400  'chown $SERVERUSER:$SERVERGROUP /home/mythtv/Calibre\ Library/*.db'
+echo "ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP /home/mythtv/Calibre\ Library/*.db'"
+ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP /home/mythtv/Calibre\ Library/*.db'

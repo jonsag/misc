@@ -1,0 +1,121 @@
+how to rip a dvd with shrip
+---------------------------------------------------------------------------
+if you got an iso file, become root, and
+# modprobe loop
+# mount -o loop <PATH/TO/FILE.ISO> /mnt/tmp
+
+find out which title you want to rip
+
+# shrip list --device /mnt/tmp
+
+find out the audio track you want to use
+# shrip list --device /mnt/tmp --audio
+
+find the chapters you want to rip
+# shrip list --device /mnt/tmp --chapters
+
+find the subtitles you want to use
+# shrip list --device /mnt/tmp --subtitles
+
+do the rip
+# shrip encode --device /<PATH>/<CONTAINING>/<VIDEO_TS> --target-size <SIZE_IN_MB> --title <TITLE_NO> --chapters <FROM_CHAPTER-TO_CHAPTER> --audio <TRACK_NO> --sub <SUB_NO> --container mkv --ensure-sync --threads 2 --passes 2 --turbo --deinterlacer 0 --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label <LABEL> /<PATH>/<TO>/<FILENAME>.mkv
+
+# shrip encode --device /mnt/tmp --audio 01 --sub 01 --chapters 01-10 --container mkv --ensure-sync --label IronManDisk1 ironman.cd1.mkv
+
+# shrip encode --device /mnt/tmp --audio 01 --sub 04 --title 01 --chapters 01-06 --container mkv --ensure-sync --label PyramidsMummiesTombs PyramidsMummiesTombs.mkv
+
+# shrip encode --device ./ --audio 02 --sub 01 --chapters 01-12 --container mkv --ensure-sync --label SecretsOfThePharaohs SecretsOfThePharaohs.mkv
+
+# shrip encode --device /mnt/tmp --title 01 --audio 01 --chapters 01-03 --sub 02 --container mkv --ensure-sync --label KillingHitler01 killing.hitler.part1.mkv
+
+# shrip encode --device /mnt/tmp --title 02 --audio 01 --chapters 01-04 --sub 02 --container mkv --ensure-sync --label KillingHitler02 killing.hitler.part2.mkv
+
+# shrip encode --device . --target-size 1400 --audio 1 --sub 1 --chapters 1-10 --container mkv --ensure-sync --label Asa-Nisse_-_Walkom_to_Knohult asa-nisse.walkom.to.knohult.mkv
+
+# shrip encode --device FLODEN_BLEV_MITT_LIV_D2 --title 01 --audio 01 --sub 01 --chapters 01-06 --container mkv --ensure-sync --label AllTheRiversRun5 All\ the\ Rivers\ Run.e05.mk
+
+# shrip encode --device /mnt/tmp --title 01 --target-size 500 --audio 01 --sub 04 --chapters 01-06 --container mkv --ensure-sync --label LittleHouseOnThePrairieS01E04 little.house.on.the.prairie.s01e01.mkv
+
+# shrip encode --device /mnt/tmp/ --target-size 300 --title 01 --audio 01 --chapters 01-11 --container mkv --ensure-sync --label NileCityE01 nile.city.e01.mkv
+
+# shrip encode --device /mnt/tmp/ --target-size 1400 --title 01 --audio 01 --chapters 01-12 --sub 03 --container mkv --ensure-sync --label TheManInTheWhiteSuite the.man.in.the.white.suite.mkv
+
+# shrip encode --device /mnt/tmp --target-size 1400 --title 01 --audio 01 --sub 04 --chapters 01-38 --container mkv --ensure-sync --label OceansEleven1960 oceans.eleven.1960.mkv
+
+# shrip encode --device ~/Downloads --target-size 500 --title 01 --audio 03 --chapters 01-04 --container mkv --ensure-sync --label kessler01 kessler.e01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 01 --chapters 01-07 --audio 01 --sub 03 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label WayOutWest01 WayOutWest01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 350 --title 02 --chapters 01-04 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label EbbaOchDidrike01 Ebba\ och\ Didrik.e01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 01 --chapters 01-07 --audio 01 --sub 09 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label TwinPeaksS01E01 Twin\ Peaks.s01e01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 01 --chapters 01-16 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label Flyg-Bom Flyg-Bom.mkv
+
+# shrip encode --device ~/Downloads/Roots\ -\ The\ Gift\ \[1988\ PAL\ DVD\]\[En\ Subs\[Sv\]/FullDisc/ROOTS_THE_GIFT/ --target-size 1400 --title 01 --chapters 01-24 --audio 01 --sub 07 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label RootsTheGift1988 RootsTheGift1988.mkv
+
+# shrip encode --device /mnt/tmp --target-size 1400 --title 04 --chapters 01-13 --audio 01 --sub 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label MarcoPoloDisk1 MarcoPoloDisk1.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 01 --chapters 01-06 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label Husbonden1 Husbonden.e01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 02 --chapters 01-06 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label Husbonden2 Husbonden.e02.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 03 --chapters 01-06 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label Husbonden3 Husbonden.e03.mkv
+
+# shrip encode --device /mnt/tmp --target-size 700 --title 04 --chapters 01-18 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label Husbonden Husbonden.mkv
+
+# shrip encode --device /mnt/tmp --target-size 1400 --title 01 --chapters 01-14 --audio 01 --sub 02 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label WereTheMillers WereTheMillers2013.mkv
+
+# shrip encode --device . --target-size 1400 --title 06 --chapters 01-21 --audio 01 --sub 08 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label JacobsLadder JacobsLadder1990.mkv
+
+# shrip encode --device ~/Downloads/A\ Funny\ Thing\ Happened\ on\ the\ Way\ to\ the\ Forum\ \[1966\ PAL\ DVD\]\[En.De.Fr.It.Es\ Multisubs\[11\]/FullDisc/A_FUNNY_THING_HAPPENED/ --target-size 1400 --title 02 --chapters 01-16 --audio 01 --sub 07 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label AFunnyTHingHappenedOnTheWayToTheForum1966 AFunnyTHingHappenedOnTheWayToTheForum1966.mkv
+
+# shrip encode --device ~/Downloads/High\ Society\ \[1956\ PAL\ DVD\]\[En.De\ Multisubs\[11\]/FullDisc/HIGH_SOCIETY/ --target-size 1400 --title 01 --chapters 01-34 --audio 01 --sub 03 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --label HighSociety1958 HighSociety1958.mkv
+
+# shrip encode --device ~/Downloads/Duck_Soup\(The\ Marx\ Brothers\)/ --target-size 1400 --title 01 --chapters 01-21 --audio 01 --sub 08 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label DuckSoup1933 DuckSoup1933.mkv
+
+# shrip encode --device ~/Downloads/The_Marx_Brothers_The_Big_Store/ --target-size 1400 --title 01 --chapters 01-24 --audio 01 --sub 06 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label TheBigStore1941 TheBigStore1941.mkv
+
+# shrip encode --device ~/Downloads/Xanadu\ \[1980\ PAL\ DVD\]\[En.Es.It.Ru\ Subs\[Nordic+En.Es.It.Ru\]/FullDisc/XANANDU/ --target-size 1400 --title 01 --chapters 01-19 --audio 01 --sub 07 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label Xanadu1980 Xanadu1980.mkv
+
+# shrip encode --device /mnt/tmp/ --target-size 1400 --title 04 --chapters 01-16 --audio 01 --sub 05 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label KissMeStupid1964 KissMeStupid1964.mkv
+
+# shrip encode --device ~/Downloads/Marx\ Brothers\ \[1931\]\ Monkey\ Business\ -\ Eng\,\ Sp\ +\ Eng\,\ Sp\,\ It\,\ Cro\,\ Por\ subs\ \ DVDrip/ --target-size 1400 --title 01 --chapters 01-19 --audio 01 --sub 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label MonkeyBusiness1931 MonkeyBusiness1931.mkv
+
+# shrip encode --device  /mnt/tmp/ --target-size 1400 --title 01 --chapters 01-21 --audio 01 --sub 08 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label AnimalCrackers1930 AnimalCrackers1930.mkv
+
+# shrip encode --device ~/Downloads/Marx\ Brothers\ \[1932\]\ Horse\ Feathers\ -\ Eng\,\ Fr\,\ Ger\,\ It\,\ Sp\ +\ multisub\ \ DVDrip/ --target-size 1400 --title 01 --chapters 01-21 --audio 01 --sub 08 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label HorseFeathers1932 HorseFeathers1932.mkv
+
+# shrip encode --device /mnt/tmp --target-size 1400 --title 01 --chapters 01-18 --audio 01 --sub 03 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label ANightAtTheOpera1935 ANightAtTheOpera1935.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 01 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E01 Bonderøven.s01e01.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 02 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E02 Bonderøven.s01e02.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 03 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E03 Bonderøven.s01e03.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 04 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E04 Bonderøven.s01e04.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 05 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E05 Bonderøven.s01e05.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 06 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E06 Bonderøven.s01e06.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 07 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E07 Bonderøven.s01e07.mkv
+
+# shrip encode --device /mnt/tmp --target-size 300 --title 08 --chapters 01-05 --audio 01 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label BonderøvenS01E08 Bonderøven.s01e08.mkv
+
+# shrip encode --device ~/Downloads/Purple\ Rain\ \[1984\ PAL\ DVD\]\[En.De\ Multisubs\[21\]/FullDisc/PRNP26LF1/ --target-size 1400 --title 01 --chapters 01-28 --audio 01 --sub 05 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label PurpleRain1984 PurpleRain1984.mkv
+
+# shrip encode --device /mnt/tmp --target-size 500 --title 02 --chapters 01-27 --audio 01 --sub 21 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec xvid --preset high --audio-codec vorbis --audio-quality 3 --debug --label MontyPythonsPersonalBestS01E01EricIdle "Monty Python's Personal Best.s01e01.mkv"
+
+$ shrip encode --device /mnt/tmp --target-size 700 --title 01 --chapters 01-30 --audio 01 --sub 18 --container mkv --ensure-sync --threads 2 --passes 2 --turbo --video-codec h264 --preset high --audio-codec vorbis --audio-quality 3 --debug --label GentlemenPreferBlondes1953 "Gentlemen Prefer Blondes.1953.swesub.mkv"
+
+$ shrip encode --device=/mnt/tmp --target-size=700 --title=01 --chapters=01-30 --audio=01 --sub=18 --container=mkv --ensure-sync --threads=2 --passes=2 --turbo --video-codec=x264 --preset=high --audio-codec=vorbis --audio-quality=3 --debug --label=GentlemenPreferBlondes1953 "Gentlemen Prefer Blondes.1953.swesub.mkv"
+
+$ shrip encode --device=/mnt/tmp --target-size=300 --title=01 --chapters=01-05 --audio=01 --sub=01 --container=mkv --ensure-sync --threads=2 --passes=2 --turbo --video-codec=x264 --preset=high --audio-codec=vorbis --audio-quality=3 --debug --label=Bonderøven.s01e01 "Bonderøven.s01e01.mkv"
+
+$ shrip encode --device=. --target-size=700 --title=01 --chapters=01-13 --audio=01 --container=mkv --ensure-sync --threads=2 --passes=2 --turbo --video-codec=x264 --preset=high --audio-codec=vorbis --audio-quality=3 --debug --label=GentlemenPreferBlondes1953 "Rasputin.1996.mkv"
+
+shrip encode --device='/home/mythtv/Downloads/Ghost Rider Rental 2007 DD5.1 MultiSubs --TBS'/ --target-size=1400 --title=01 --chapters=01-28 --audio=01 --sub=07 --container=mkv --ensure-sync --threads=2 --passes=2 --turbo --video-codec=x264 --preset=high --audio-codec=vorbis --audio-quality=3 --debug --label=GhostRider2007swesubDVDRipX264 "Ghost Rider.2007.swesub.dvdrip.x264.mkv"
+
+shrip encode --device ~/Downloads/Flaklypa_Grand_Prix/ --target-size=1400 --title=01 --chapters=01-18 --audio=01,03,05 --sub=03 --container=mkv --ensure-sync --threads=2 --passes=2 --turbo --video-codec=x264 --preset=high --audio-codec=vorbis --audio-quality=3 --debug --label=FlåklypaGrandPrix1975 "Flåklypa Grand Prix.1975.dvdrip.x264.mkv"

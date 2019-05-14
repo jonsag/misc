@@ -1,0 +1,26 @@
+view load of cpu0
+# echo "CPU #0: $(egrep ^cpu0 /proc/stat | gawk '{printf("%3.2f", 100*($2+$3+$4)/($2+$3+$4+$5))}')%"
+
+view load of cpu1
+# echo "CPU #1: $(egrep ^cpu1 /proc/stat | gawk '{printf("%3.2f", 100*($2+$3+$4)/($2+$3+$4+$5))}')%"
+
+
+script to log load
+       FN=system_temp.log
+       PU=$(egrep -c ^cpu[0-9]+ /proc/stat) #This is the number of CPUs you have
+       for ((z=0; z<25; z++))
+       {
+               echo " " >> $FN
+	       echo "Time: $(date +%H:%M)"  >> $FN
+	       echo "--------------------------------------------------------------------------------" >> $FN
+	       for ((i=0; i < $PU; i++))
+	       {
+	               echo "CPU #$i: $(egrep ^cpu$i /proc/stat | gawk '{printf("%3.2f", 100*($2+$3+$4)/($2+$3+$4+$5))}')%" >> $FN
+	       }
+               echo "--------------------------------------------------------------------------------" >> $FN
+               sensors |grep Temp: >> $FN
+               echo " " >> $FN
+               echo "////////////////////////////////////////////////////////////////////////////////" >> $FN
+               number=$((number + 1))
+               sleep 180 #wait 3 minutes
+	}

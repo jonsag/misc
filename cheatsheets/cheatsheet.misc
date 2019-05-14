@@ -1,0 +1,9 @@
+count occurencies fo specific character in file
+$ tr -cd '"' < /path/to/file | wc -c
+
+
+DS18B20
+$ cat /sys/bus/w1/devices/28-03170374aeff/w1_slave
+
+$ echo "scale=3;"`cat /sys/bus/w1/devices/28-03170374aeff/w1_slave | tail -1 | awk -F "=" '{ print $2; }'`"/1000" | bc -l
+

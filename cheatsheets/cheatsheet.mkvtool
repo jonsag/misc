@@ -1,0 +1,12 @@
+add subtitle to video
+$ mkvmerge -o output.mkv input.mkv --language 0:sv --track-name 0:Swedish subs.srt
+
+extract subtitles
+$ for f in *.mkv; do
+      sub=$(mkvmerge -i "$f" | awk '$4=="subtitles"{print;exit}')
+      [[ $sub ]] || continue
+      [[ $sub =~ S_TEXT/ASS ]] && ext=ass || ext=srt
+      track=$(awk -F '[ :]' '{print $3}' <<< "$sub")
+      mkvextract tracks "$f" "$track:${f%mkv}$ext"
+  done
+

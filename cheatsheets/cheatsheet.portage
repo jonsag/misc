@@ -1,0 +1,35 @@
+show emerge history
+# qlop -l
+
+world file
+# cat /var/lib/portage/world
+
+protect gentoo-sources from cleaning, by adding them explicitly to world file
+# equery -q list -i gentoo-sources | awk -- '{ print "=" $1 }' | xargs emerge --noreplace
+
+add specific package to world file
+# emerge --noreplace =sys-kernel/gentoo-sources-4.9.95
+
+create manifest
+in the directory where the .ebuilds live
+# ebuild foo.ebuild manifest
+
+build with temporary settings
+# MAKEOPTS="-j1" NINJAOPTS="-l1" emerge -1 =dev-qt/qtwebkit-5.212.0_pre20180120
+# MAKEOPTS="-j1" NINJAOPTS="-l1" emerge -1 =net-libs/webkit-gtk-2.22.2
+
+emerge list from file, where lines are like:
+[ebuild     U  ] net-libs/webkit-gtk-2.22.5 [2.22.2]
+# emerge -uDNp @world --exclude=dev-libs/libcdio --exclude=media-tv/mythtv --exclude=x11-base/xorg-server --exclude=x11-drivers/nvidia-drivers --exclude=gnome-base/libglade --exclude=app-text/asciidoc --exclude=sys-apps/lm_sensors >> emerge.list
+
+# cat emerge.list | awk '{print $4}' | sed 's/^/=/' | while read i; do emerge -1 --nodeps "$i"; done
+
+
+pass USE at cli
+# USE="-X -esd -gnome -gtk" emerge bitchx
+
+# UNMASK="=x11-drivers/nvidia-drivers-415.25" emerge -uDNav world
+
+dev-qt/qtwebkit
+# MAKEOPTS="-j1" FEATURES="-distcc -ccache" emerge -1 dev-qt/qtwebkit
+# MAKEOPTS="-j1" FEATURES="-distcc -ccache" emerge -1 net-libs/webkit-gtk

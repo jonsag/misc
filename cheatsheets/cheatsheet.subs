@@ -1,0 +1,23 @@
+adjust sync for subtitle files
+time format is either [[HH:]MM:]SS[.MSEC] or subtitle format-specific
+
+
+adjust subs to appear 2 seconds earlier
+# subs -i -b -2 subtitle.srt
+
+
+if subtitles are shown 5 seconds too early
+# subs -i -b 5 subtitle.srt
+
+
+if subtitles start ok, but in 1 hour are late in 7 seconds:
+# subs -i -p 0 0 -p 1:00:00 +7 subtitle.srt
+
+
+
+convert from dcsub to srt
+$ dcsubtitle_to_srt.py dcsub.srt >> srtsub.srt
+
+
+make embedded subs appear 0.7s earlier
+$ ffmpeg -i input.mp4 -itsoffset -0.7 -i input.mp4 -map 0:v -map 0:a -map 1:s -c copy output.mp4

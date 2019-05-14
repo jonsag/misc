@@ -1,0 +1,32 @@
+usage: subliminal [-h] [-l LANGUAGE [LANGUAGE ...]]
+                  [-p PROVIDER [PROVIDER ...]] [-m MIN_SCORE] [-s] [-f]
+                  [-c CACHE_FILE] [-a AGE] [--hearing-impaired] [-q | -v]
+                  [--version]
+                  PATH [PATH ...]
+
+Subtitles, faster than your thoughts
+
+positional arguments:
+  PATH                  path to video file or folder
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l LANGUAGE [LANGUAGE ...], --languages LANGUAGE [LANGUAGE ...]
+                        wanted languages as alpha2 code (ISO-639-1)
+  -p PROVIDER [PROVIDER ...], --providers PROVIDER [PROVIDER ...]
+                        providers to use from opensubtitles, thesubdb,
+                        bierdopje, addic7ed, tvsubtitles (default: all)
+  -m MIN_SCORE, --min-score MIN_SCORE
+                        minimum score for subtitles. 0-46 for episodes, 0-31
+                        for movies
+  -s, --single          download without language code in subtitle's filename
+                        i.e. .srt only
+  -f, --force           overwrite existing subtitles
+  -c CACHE_FILE, --cache-file CACHE_FILE
+                        cache file (default: ~/.config/subliminal.cache.dbm)
+  -a AGE, --age AGE     download subtitles for videos newer than AGE e.g. 12h,
+                        1w2d
+  --hearing-impaired    download hearing impaired subtitles
+  -q, --quiet           disable output
+  -v, --verbose         verbose output
+  --version             show program's version number and exit

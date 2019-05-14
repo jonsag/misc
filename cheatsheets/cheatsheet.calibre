@@ -1,0 +1,33 @@
+install latest or update existing
+$ sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+
+
+sort out swedish and not read and not on device
+Language:"=Swedish" not OnDevice:"Main" and #read:"No"
+
+find titles without IDs and not comics format
+isbn:False and not formats:"=CBR" and not formats:"=CBZ"
+
+
+start server
+# /usr/bin/calibre-server --userdb /srv/calibre/users.sqlite --enable-auth --worker-count 10 --port 8080 '/home/mythtv/Calibre Library'
+
+handle users
+# calibre-server --userdb /srv/calibre/users.sqlite --manage-users
+
+
+change permissions
+# chown mythtv:users -R /home/mythtv/Calibre\ Library
+# find /home/mythtv/Calibre\ Library -type d -exec chmod u+x {} \;
+
+
+conf.d/calibre-server file
+CALIBRE_SERVER_OPTS="--enable-auth --auth-mode auto --userdb /srv/calibre/users.sqlite --ban-after 3 --ban-for 60 --worker-count 10 --port 8080 --log /var/log/calibre/server.log --access-log /var/log/calibre/server_access_log.log --max-log-size 100"
+
+start command
+/usr/bin/calibre-server --enable-auth --auth-mode auto --userdb /srv/calibre/users.sqlite --ban-after 3 --ban-for 60 --worker-count 10 --port 8080 --log /var/log/calibre/server.log --access-log /var/log/calibre/server_access_log.log --max-log-size 100 /home/mythtv/Calibre Library
+
+
+manage users for server
+# calibre-server --manage-users --userdb /path/to/db
+# calibre-server --manage-users --userdb /srv/calibre/users.sqlite

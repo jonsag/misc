@@ -1,0 +1,24 @@
+list shares name on a server
+$ smbclient -L <server> -U<user name>
+
+$ smbclient -L <server> -U<user name> -I <ip address>
+
+mount a samba share with cifs
+$ mount -t cifs -o username=<share user>,password=<share password> //<ip adress>/<share name> /path/to/mount/point
+
+or add in /etc/fstab
+//WIN_PC_IP/<share name>    /<mntpoint>   cifs  _netdev,username=<share user>,password=<share password>,dir_mode=0755,file_mode=0755,uid=500,gid=500 0 0
+
+$ nmblookup -S WORKGROUP
+
+returns IP adresses of all Samba servers in one's own broadcast domain
+$ nmblookup __SAMBA__
+
+returns a list of all NetBIOS names and their aliases of all Samba servers in the neighbourhood
+$ nmblookup -S __SAMBA__
+
+returns a list of all IP adresses of SMB servers
+nmblookup '*'
+
+returns all NetBIOS names and their aliases of all SMB servers
+$ nmblookup -S '*'

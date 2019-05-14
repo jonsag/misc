@@ -1,0 +1,53 @@
+cd to correct directory
+# cd /usr/src
+
+delete old symlink
+# rm linux
+
+create new symlink
+# ln -s linux-x.x.x linux
+
+cd to source dir
+# cd linux
+
+copy old config
+# cp ../x.x.x-gentoo .config
+
+make config
+# make oldconfig (allmodconfig)
+
+
+################################### build
+build kernel and modules
+# make && make modules_install
+
+
+################################### kernel and system map
+copy kernel
+# cp arch/x86_64/boot/bzImage /boot/kernel-x.x.x-gentoo
+
+copy system map
+# cp System.map /boot/System.map-x.x.x-gentoo
+
+
+################################### grub
+update grub
+# grub-mkconfig -o /boot/grub/grub.cfg
+
+################################### lilo
+add entry in /etc/lilo.conf
+
+update lilo
+# /sbin/lilo
+
+################################### kernel related modules
+rebuild kernel modules
+# emerge --ask @module-rebuild
+
+
+################################### clean
+remove old kernel and modules, keeping just three
+# eclean-kernel -n 3
+
+remove old kernels up to specific version
+# emerge --unmerge "<sys-kernel/gentoo-sources-2.6.35"

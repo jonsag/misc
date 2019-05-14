@@ -1,0 +1,13 @@
+
+http://docs.octoprint.org/en/master/api/
+
+http://192.168.10.47:5000/api/printer?apikey=6A9EF82047954EBC8ABDE620F92389EA&history=true&limit=2
+
+http://192.168.10.47:5000/api/job?apikey=6A9EF82047954EBC8ABDE620F92389EA
+
+http://192.168.10.47:5000/api/slicing?apikey=6A9EF82047954EBC8ABDE620F92389EA
+http://192.168.10.47:5000/api/slicing/cura/profiles?apikey=6A9EF82047954EBC8ABDE620F92389EA
+http://192.168.10.47:5000/api/slicing/cura/profiles/al_200-65_3perims_40mmps?apikey=6A9EF82047954EBC8ABDE620F92389EA
+
+http://192.168.10.47:5000/api/users?apikey=6A9EF82047954EBC8ABDE620F92389EA
+

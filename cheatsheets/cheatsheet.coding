@@ -1,0 +1,8 @@
+find coding
+# file -bi filename
+
+convert from iso8859-1 to utf8
+#  iconv --from-code=ISO-8859-1 --to-code=UTF-8 ./oldfile > ./newfile
+
+massconvert
+#  find . -name "*.srt" -exec iconv -f ISO-8859-1 -t UTF-8 {} -o {}.utf8 \;

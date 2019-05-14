@@ -1,0 +1,22 @@
+nload example
+# nload devices wlan0 -t 200 -i 1024 -o 128 -U M
+
+
+iftop
+# iftop -i wlan0
+h - help menu
+
+
+
+
+
+speedtest-cli
+simple test
+$ speedtest-cli
+
+list servers, sorted by incremental distance
+$ speedtest-cli --list
+
+specify server
+$ speedtest-cli --server <server id>
+

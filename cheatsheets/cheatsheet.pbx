@@ -1,0 +1,6 @@
+Press the upgrade button below.
+Go to Module Admin, check for online updates, and upgrade the FreePBX Framework module ONLY from the online repository which will now be connected to version 12.0.
+Now, Check for online updates again and upgrade all other modules that have upgrades available. If you get dependency warnings or FATAL ERRORS, just repeat the process until all your modules have been upgraded. ***AGAIN ALL MODULES MUST BE UPDATED***
+Now press the Apply Configuration bar.
+Run 'amportal chown'
+Finally you will want to run 'amportal a ma refreshsignatures'

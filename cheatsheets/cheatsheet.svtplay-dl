@@ -1,0 +1,60 @@
+prerequisites
+# pip install pycryptodome pyyaml requests pysocks
+
+update prerequisites
+# pip install pycryptodome pyyaml requests pysocks --upgrade
+
+install
+$ git clone https://github.com/spaam/svtplay-dl.git
+$ cd svtplay-dl
+$ sudo python3 setup.py install
+
+update
+$ cd /path/to/svtplay-dl
+$ git pull
+$ sudo python3 setup.py install
+
+
+view available qualities
+$ svtplay-dl --list-quality https://www.svtplay.se/video/15367465/var-tid-ar-nu/var-t...
+
+download with subs, set quality,and how much quality can differ
+$ svtplay-dl -S -P hls -q 1600 -Q 100 https://url.to.video.page
+
+
+download from url-list
+$ (while read URL; do [ "$URL" ] && svtplay-dl "$URL"; done) < data.txt
+
+
+
+
+$ svtplay-dl http://www.dplay.se/gasmamman/season-2-avsnitt-1/ --list-quality
+
+$ svtplay-dl http://www.dplay.se/gasmamman/season-2-avsnitt-1/ --quality=1675 --preferred=HLS --subtitle --output='Gåsmamman.s02e01'
+OR
+$ svtplay-dl http://www.dplay.se/gasmamman/season-2-avsnitt-1/ -q 1675 -P HLS -S -o 'Gåsmamman.s02e01'
+
+
+
+
+
+recode to mp4
+$ ffmpeg -i Gåsmamman.s02e01.ts -acodec copy -vcodec copy Gåsmamman.s02e01.mp4
+
+$ ffmpeg -i Gåsmamman.s02e01.ts -acodec copy -vcodec copy -bsf:a aac_adtstoasc Gåsmamman.s02e01.mp4
+
+
+
+
+
+$ (while read URL NAME; do [ "$URL" ] && svtplay-dl -o "$NAME.{episodename}.{ext}" "$URL"; done) < data.txt
+
+this will produce:
+audio.ts
+video.ts
+subs.srt
+
+combine these with:
+$ ffmpeg -i video.ts -i audio.ts -i subs.srt -metadata:s:a:0 language=swe -metadata:s:s:0 language=swe -c copy outfile.mkv
+
+

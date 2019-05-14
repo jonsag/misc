@@ -1,0 +1,139 @@
+find all files in a directory containing a string of text:
+---------------------------------------------------------------------------
+# find . -type f | xargs grep <STRING>
+
+
+same as above, but handles spaces and single quotes in file names, and also prints line number where match occurs
+---------------------------------------------------------------------------
+# find . -type f -print0 | xargs -0 grep <STRING>
+
+
+print all occurennces of string
+---------------------------------------------------------------------------
+# find Futurama.s01 Futurama.s02 -type f -name "*.srt" -exec cat {} \; | grep -i popplers
+
+
+locate files/dirs and list those containing a string of text:
+---------------------------------------------------------------------------
+# locate <file/dir name> | xargs grep <STRING>
+
+
+find and count occurencies
+---------------------------------------------------------------------------
+# find -type f -name "*.rm" | wc -l
+
+
+remove last characters from filename
+---------------------------------------------------------------------------
+# find ../../../SG/Video/Movies -name "*.srt.old" >> temp ; while read file; do mv "$file" "${file%.old}" ; done < temp
+
+
+replace all occurances of 'old' with 'new' in all files in search path
+---------------------------------------------------------------------------
+# find </PATH/TO/SEARCH> -type f -exec sed -i 's/old/new/g' {} \;
+
+
+find all files with matching file names (and 'sed' to take care of filenames with spaces), and list those containing string:
+---------------------------------------------------------------------------
+# find </PATH/TO/SEARCH> -name "<MATCH>" -print | sed -e 's/.*/"&"/' | xargs grep <STRING>
+
+
+show the file name, line number, and the line - not pretty, but useful
+---------------------------------------------------------------------------
+# grep -nHrw <STRING> </PATH/TO/FOLDER>
+
+
+find all files older than 1 day, with file ending log, only in this directory, and then delete them
+---------------------------------------------------------------------------
+# find ./ -maxdepth 1 -type f -name "*.log" -mtime +1 -exec rm -rf {} \;
+
+
+find and delete links in the current directory
+---------------------------------------------------------------------------
+# find * -type d -prune -o -type l -exec rm {} \;
+or
+# find . ! -name . -prune -type l -exec rm {} \;
+or
+# find . ! -name . -prune -type l|xargs rm
+
+
+find and delete links, and then delete all .srt files in the current dirextory
+---------------------------------------------------------------------------
+# find * -type d -prune -o -type l -exec rm {} \; && find * -name "*.srt" -exec rm {} \;
+
+
+find duplicate files
+---------------------------------------------------------------------------
+# find -not-empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate
+
+
+find duplicate files and delete them after asking
+---------------------------------------------------------------------------
+# find -not-empty -type f -printf "%s\n" | sort -rn | uniq -d |  xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate | cut -f3-100 -d ' ' | tr '\n.' '\t.' | sed 's/\t\t/\n/g' | cut -f2-100 | tr '\t' '\n' | perl -i -pe 's/([ (){}-])/\\$1/g' | perl -i -pe 's/'\''/\\'\''/g' | xargs -pr rm -v
+
+
+find and delete all but three newset files in current firectory
+---------------------------------------------------------------------------
+# find . -maxdepth 1 -type f -printf '%T@ %p\0' | sort -r -z -n | awk 'BEGIN { RS="\0"; ORS="\0"; FS="" } NR > 5 { sub("^[0-9]*(.[0-9]*)? ", ""); print }' | xargs -0 rm -f
+
+
+find files matching multiple name patterns
+---------------------------------------------------------------------------
+# find . -name "*.url" -o -name "*.txt" -o -name "*.nfo" -o -name "*.gif"
+
+
+find files larger than
+---------------------------------------------------------------------------
+1 GB
+# find <PATH> -type f -size +1048576
+2 GB
+# find <PATH> -type f -size +2097152
+
+
+find files larger than 1GB and display filesize
+---------------------------------------------------------------------------
+# find <PATH> -type f -size +1048576 -printf "%s:%h%f\n"
+
+find all files in .tmp directory and delete them
+---------------------------------------------------------------------------
+$ find .tmp/ -type f -exec rm {} \;
+
+find music files in current dir and count them
+---------------------------------------------------------------------------
+$ find . -iname "*.mp3" -o -iname "*m4a" -o -iname "*.wma" -o -iname "*.flac" -o -iname "*.ogg" | wc -l
+
+find directories and list the 20 first by date, newest first
+---------------------------------------------------------------------------
+$ find . -type d -printf '%T@ %p\0' | sort -zk 1nr | sed -z 's/^[^ ]* //' | tr '\0' '\n' | head -n 20
+
+find direcories one level down
+---------------------------------------------------------------------------
+$ find . -maxdepth 2 -mindepth 2 -type d
+
+find directories one level down, exclude where "previews" is present in path
+---------------------------------------------------------------------------
+$ find . -maxdepth 2 -mindepth 2 -type d -not -name "previews"
+
+
+find all files of type .php and .py and count lines in all, and sort them by line count
+---------------------------------------------------------------------------
+$ find <path> -type f -name *php -o -name *py | xargs wc -l | sort -n
+
+
+---------------------------------------------------------------------------
+$ find . -type d -name '*-[0-9][0-9]' -exec mv ${} ${{}::(-2)} \;
+$ find . -type d -name '*-[0-9][0-9]' | xargs mv $file ${$file::(-2)}
+file="file.txt.123456"
+mv $file ${file::(-7)}
+
+$ for dir in $(find . -type d -name '*-[0-9][0-9]'); do echo $dir; done
+
+find . -type d -name '*-[0-9][0-9]' -print0 |
+while IFS= read -r -d '' dir; do
+    printf '%s\n' "$dir"
+done
+
+$ find . -type d -name '*-[0-9][0-9]' | while read dir; do echo $dir ; done
+$ find . -type d -name '*-[0-9][0-9]' | while read 'dir'; do mv $dir ${dir::(-2)} ; don
+
+$ find . -type d -name '*-[0-9][0-9]' -execdir bash -c 'mv {} ${{}::(-2)}' \;

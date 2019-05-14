@@ -1,0 +1,27 @@
+##### GUI #####
+o		toggle osd information, off, elapsed, elapsed/total
+
+arrow keys	left-right: 10 sec, up-down: 1 min
+
+pgup pgdown	10 min
+
+[ ]  		playback speed 10%
+
+{ }		half/double speed
+
+backspace	reset speed to normal
+
+s		take screenshot
+
+S		start/stop taking screenshots
+
+
+
+extract frames from part of video
+$ mplayer samba.mp4 -ss 00:00:15 -endpos 5 -ao null -vo jpeg
+
+extract and recode part of video
+$ mencoder -ss 00:30:00 -endpos 00:00:05 -oac copy -ovc copy originalfile -o newfile
+
+$ mencoder -ss 00:58:18 -endpos 00:01:45 -oac faac -ovc x264 Lets\ Dance.s2015e04.2617kbps.mp4 -o jonas\ björkman/cha_cha2-mencoder.mp4
+

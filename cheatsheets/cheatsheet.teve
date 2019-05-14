@@ -1,0 +1,27 @@
+create dir
+$ mkdir teve && cd teve
+
+get source
+$ fossil clone https://chiselapp.com/user/jesper/repository/teve teve.fossil
+$ fossil open teve.fossil
+
+install chicken
+# emerge chicken
+OR
+# equo install chicken
+
+install eggs
+# make install-eggs
+
+obtain schemes
+$ mkdir base && cd base
+$ fossil clone https://chiselapp.com/user/jesper/repository/scheme-base base.fossil
+$ fossil open base.fossil
+$ ln -s base scheme-prelude
+
+build binary
+$ make
+
+install
+# # make PREFIX=/usr/local install
+

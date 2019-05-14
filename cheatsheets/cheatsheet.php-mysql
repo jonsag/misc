@@ -1,0 +1,124 @@
+<?php
+
+// Connections Parameters
+$db_host = "hostname_or_ip";
+$db_name = "database_name";
+$username = "username";
+$password = "password";
+
+$db_con = mysql_connect($db_host,$username,$password);
+$connection_string = mysql_select_db($db_name);
+
+// connect to mysql
+if (!$db_con) {
+  die('Could not connect: ' . mysql_error());
+}
+
+// select database
+mysql_select_db($db_name) or die(mysql_error());
+
+
+
+
+
+////////// ask mysql for all rows matching the question, and print it out //////////
+$counter = 0;
+$id = array();
+$column1 = array();
+$column2 = arrays();
+
+$sql = "SELECT * FROM table_name WHERE some_column='something'";
+
+$query = mysql_query($sql);
+
+while($row = mysql_fetch_array($query)) {
+  $counter1++;
+  
+  $id[$counter1] = $row['id'];
+  $column1[$counter1] = $row['column1'];
+  $column2[$counter1] = $row['column2'];
+
+}
+
+// print out the result
+for ($counter2 = 1;$counter2 <= $counter1; $counter2++) {
+  echo "Row " . $counter2 . "/" . $counter1 . " id=" . $id[$counter2] . " column1=". $column1[$counter2] . " column2=" . $column2[$counter2] . "<br>\n";
+}
+
+
+
+
+
+////////// count how many posts matches the search //////////
+$sql = "SELECT COUNT(*) FROM table_name WHERE some_column='something' AND some_other_column='something'";
+
+$query = mysql_query($sql);
+
+$result = mysql_fetch_row($query);
+
+if (!$result) {
+   die('Invalid query: ' . mysql_error());
+}
+
+echo $result[0] . " rows match the question\n";
+
+
+
+
+
+
+////////// write some values to new post in database //////////
+$sql = "INSERT INTO table_name (column1, column2) VALUES ('something', '$some_variable')";
+
+$result = mysql_query($sql);
+
+if ($result) {
+  echo "OK <br>\n";
+}
+else {
+  die('Invalid query: ' . mysql_error());
+}
+
+
+
+
+
+////////// update existing post with a new value //////////
+$sql = "UPDATE table_name SET column1='something' WHERE id='something'";
+
+$result = mysql_query($updateSql) or die(mysql_error());
+
+
+
+
+
+////////// find duplicate records in column (this will not show anything on screen, but OK) //////////
+$sql = "SELECT column, COUNT(*) c FROM table_name GROUP BY column HAVING c > 1";
+
+$result = mysql_query($sql);
+
+if ($result) {
+  echo "OK <br>\n";
+}
+else {
+  die('Invalid query: ' . mysql_error());
+}
+
+////////// find field you know is unique //////////
+$sql = "SELECT column_name FROM table_name WHERE column='something'";
+
+$result = mysql_query($sql);
+
+if ($result) {
+  echo (mysql_result($result,0));
+}
+else {
+  die('Invalid query: ' . mysql_error());
+}
+
+
+
+// close connection to mysql
+mysql_close($db_con);
+
+?>

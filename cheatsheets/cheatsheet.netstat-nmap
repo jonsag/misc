@@ -1,0 +1,42 @@
+find hosts on local network
+# nmap -sP 192.168.0.1-254
+
+check if local host is listening on specific port
+# netstat -an |grep 445 |grep LISTEN
+or
+# netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".445"'
+
+list all ports that are listening on TCP
+# netstat -lnt
+
+if port is listening, then this returns "0"
+# nc -z localhost 445; echo $?
+
+use lsof to see more output
+# lsof -i TCP| fgrep LISTEN
+
+list listening ports and the processes that use them
+# netstat -lnptu
+
+count all opened ports including response traffic
+# netstat -tuwanp | awk '{print $4}' | sort | uniq -c | wc -l
+
+find computers MAC from IP
+# ping -c 1 <computer name or IP>
+# arp -a | grep <computer name or IP>
+
+
+check a number of ports if they are open
+# nmap 192.168.10.48 -p 22,23,80,81,2222,2223,5044,5045,5601,8080,8088,8090,8091,8092,9200,22222 -sS
+
+
+check what program is run on port
+# fuser <port>/tcp
+# lsof -i TCP:<port>
+
+# netstat -punta | grep <port>
+
+
+check if nrpe is listening on port 55666
+# netstat -at | egrep "nrpe|5666
+

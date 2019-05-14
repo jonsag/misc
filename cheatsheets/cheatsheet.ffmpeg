@@ -1,0 +1,122 @@
+recode part of video, 00:26:20 is start time, 00:02:00 is duration
+$ ffmpeg -i in_movie.avi -ss 00:26:20 -t 00:02:00 out_movie.avi
+
+
+crop video to 684x384 px, at 170px out and 96px down from top left corner
+$ avconv -i Lets\ Dance.s2015e06.2615kbps.mp4 -ss 00:22:53 -t 00:01:21 -vcodec libx264 -acodec libfaac -vf crop=684:384:170:96 marie\ serneholt/samba2.mp4
+
+---------------------------------------------------------------------------------
+if you don’t know exactly the size and position of the rectangle you want to crop, MPlayer offers an useful feature with its rectangle filter.
+
+Create a file ~/.mplayer/crop containing the following keybindings for MPlayer:
+
+RIGHT change_rectangle 2  10
+LEFT  change_rectangle 2 -10
+UP    change_rectangle 3 -10
+DOWN  change_rectangle 3  10
+KP6   change_rectangle 0  10
+KP4   change_rectangle 0 -10
+KP8   change_rectangle 1  10
+KP2   change_rectangle 1 -10
+
+Start MPlayer on the video you want to crop, with the rectangle filter and the special keybindings configuration you’ve just created:
+
+$ mplayer -vf rectangle -input conf=crop input.avi
+
+A white rectangle will frame the entire video; use the numeric keypad (keys 2, 4, 6 and 8) to resize the rectangle and the arrow keys to move it on the region you want to crop. When you’re done, stop MPlayer; it will have written the current size and position of the rectangle on its standard output:
+
+rectangle: -vf rectangle=240:160:190:30
+
+Now you just have to use these values in the FFmpeg command line to crop the desired region.
+---------------------------------------------------------------------------------
+
+
+convert from flv to mp4
+$ ffmpeg -i filename.flv -c:v libx264 -crf 19 -strict experimental filename.mp4
+
+
+download stream and subs to 'biffen'
+$ /usr/bin/ffmpeg -i http://svtplay12p-f.akamaihd.net/i/se/open/20160605/1354274-001A/PG-1354274-001A-BLONDIEBIFFEN-01_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -stats -loglevel fatal -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'biffen.mp4'
+
+wget -O 'biffen.srt' http://media.svt.se/download/mcc/test/core-prd/SUB-1354274-001A-BLONDIEBIFFENOCH/SUB-1354274-001A-BLONDIEBIFFENOCH.wsrt
+
+
+download stream with verbose output
+$ /usr/bin/ffmpeg -i http://svtplay12p-f.akamaihd.net/i/se/open/20160605/1354274-001A/PG-1354274-001A-BLONDIEBIFFEN-01_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -loglevel verbose -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'biffen.mp4'
+
+$ ffmpeg -i http://svtplay9a-f.akamaihd.net/i/world/open/20160604/1368012-009A/PG-1368012-009A-NVOKKUPERT-01_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -stats -loglevel fatal -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'Okkupert.mp4'
+
+$ ffmpeg -i http://svtplay4o-f.akamaihd.net/i/world/open/20160615/1368012-010A/PG-1368012-010A-NVOKKUPERT-02_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -stats -loglevel fatal -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'Okkupert.201e10.mp4'
+
+$ ffmpeg http://svtplay7j-f.akamaihd.net/i/se/open/20160618/1373680-002A/PG-1373680-002A-UNVILLAGEFRAN-01_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -stats -loglevel fatal -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'Un\ village\ Français.s04e02.mp4'
+
+$ ffmpeg http://svtplay7j-f.akamaihd.net/i/se/open/20160618/1373680-002A/PG-1373680-002A-UNVILLAGEFRAN-01_,988,240,348,456,636,1680,2796,.mp4.csmil/index_5_av.m3u8?null=0 -stats -loglevel fatal -acodec copy -vcodec copy -absf aac_adtstoasc -timeout 1000 'Un village\ Français.s04e02.mp4'
+
+
+crop and resize
+$ ffmpeg -i in.mp4 -filter:v "crop=out_w:out_h:x:y" out.mp4
+out_w is the width of the output rectangle
+out_h is the height of the output rectangle
+x and y specify the top left corner of the output rectangle
+
+$ ffmpeg -i KobTaiMeg_13_Kobes_Tie.avi -filter:v "crop=632:328:4:76" -acodec copy -vcodec libx264 -preset slow -crf 22 KobTaiMeg_13_Kobes_Tie.mkv
+
+
+change to new aspect ratio
+$ ffmpeg -i KobTaiMeg_13_Kobes_Tie.avi -filter:v "crop=632:328:4:76" -acodec copy -vcodec libx264 -preset slow -crf 22 -aspect 640:480 KobTaiMeg_13_Kobes_Tie.mkv
+
+N/A
+$ ffmpeg -i KobTaiMeg_13_Kobes_Tie.avi -filter:v "crop=632:328:4:76" -acodec copy -vcodec libx264 -preset slow -crf 22 -vf scale=640:480 -aspect 640:480 KobTaiMeg_13_Kobes_Tie.mkv
+
+N/A
+$ ffmpeg -i KobTaiMeg_13_Kobes_Tie.avi -filter:v "crop=632:328:4:76" -acodec copy -vcodec libx264 -preset slow -crf 22 -vf scale=640:480,setsar=4:3 KobTaiMeg_13_Kobes_Tie.mkv
+
+
+
+merge two mkv files
+# mkvmerge -o newfile.mkv part1.mkv +part2.mkv
+
+
+convert mp4 video to mp3 audio
+$ ffmpeg -i video.mp4 -b:a 192K -vn music.mp3
+
+
+add subs into mkv
+$ ffmpeg -i video.file.ts -i subtitle.file.srt -metadata:s:a:0 language=eng -metadata:s:s:0 language=swe -c copy outfile.mkv
+
+
+recode vide to max bitrate 2M, copy audio
+$ ffmpeg -i input -c:v libx264 -b:v 2M -maxrate 2M -bufsize 1M -c:a copy output.mp4
+
+$ ffmpeg -i input -c:v libx264 -b:v 1.5M -maxrate 2M -bufsize 1M -c:a copy output.mp4
+
+$ ffmpeg -i GW\ -s\ mord\ del\ 3-3909072.mp4 -c:v libx264 -b:v 1.5M -maxrate 2M -bufsize 1M -c:a copy 'GWs mord.s01e03.mkv'
+
+
+
+recode with in and out points
+$ ffmpeg -i AmateurAllure.Amateur.Girl.Tali.Dova.Lizzie.Bell.Piper.Perri.PreAuditions.52.1080p.XXX.mov -ss 00:21:16 -to 00:32:54 -c:v libx264 -b:v 1.5M -maxrate 2M -bufsize 1M -c:a copy AmateurAllure.Piper.Perri.PreAuditions.52.mkv
+
+
+
+recode and scale, use only subs #2
+$ ffmpeg -i input.video -c:v libx264 -b:v 1.5M -maxrate 2M -bufsize 1M -filter:v scale=720:-1 -c:a copy -map 0:v:0 -map 0:a:0 -map 0:s:2 -c:s copy -metadata:s:s:0 language=sv output.mkv
+
+
+rip DVD
+$ cat VTS_0*_*VOB | ffmpeg -i - -c:v libx264 -crf 23 rip.mp4
+
+$ ffmpeg -i concat:VTS_02_1.VOB\|VTS_02_2.VOB\|VTS_02_3.VOB\|VTS_02_4.VOB\|VTS_02_5.VOB -map 0:v:0 -map 0:a:0 -codec:a libvo_aacenc -ab 128 -codec:v libx264 -vpre libx264-ipod640 movie.mp4
+
+$ ffmpeg -i concat:"/media/dvd/VIDEO_TS/VTS_01_1.VOB|/media/dvd/VIDEO_TS/VTS_01_2.VOB" \
+-acodec libfaac -aq 100 -ac 2 -vcodec libx264 -vpre slow -crf 24 -threads 0 output.mp4
+
+
+
+merge two videos
+      file '/path/here/file1.avi'
+      file '/path/here/file2.avi'
+Then pass that file to ffmpeg
+
+$ ffmpeg -f concat -i mylist.txt -c copy video_draft.avi
+

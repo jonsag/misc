@@ -1,0 +1,54 @@
+mythtv
+-------------------------------------------------------------------------------
+# emacs /etc/inittab
+add the following under TERMINALS
+    c7:12345:respawn:/sbin/mingetty --autologin=mythtv tty7
+
+# emacs /etc/login.defs
+add the following
+    NO_PASSWORD_CONSOLE tty7
+
+# emacs /home/mythtv/bash_profile
+add the following
+    if [ -z "$DISPLAY" ] && [ $(tty) == /dev/tty7 ]; then
+       startx
+    fi
+
+# emacs /home/mythtv.xinitrc
+this is an example of an easy edited file
+     ## Starta xfce4
+     #exec startxfce4
+
+     ## Starta mythfrontend
+     #mythfrontend -l /home/mythtv/mythfrontend.log 2>&1
+     #mythfrontend --loglevel info --logpath /var/log/mythtv
+     mythfrontend -q -q
+
+     ## Starta mythtv-setup
+     #mythtv-setup
+
+     ## Starta vanlig terminal
+     #xterm
+
+xbmc
+-------------------------------------------------------------------------------
+Define an xinitrc file in xbmc's home
+# emacs /home/xbmc/.xinitrc
+    [ -x /usr/bin/nvidia-settings ] && /usr/bin/nvidia-settings -l
+    /usr/bin/xset s noblank
+    /usr/bin/xset s off
+    /usr/bin/xset -dpms
+    /usr/bin/evilwm &
+    exec /usr/bin/xbmc
+
+Then create the login scripts
+# emacs /home/xbmc/.bash_profile
+    case "`tty`" in
+        *tty9) startx; logout ;;
+    esac
+
+Finally add an inittab entry which does the autologin
+# emacs /etc/inittab
+    ...
+    c9:2345:respawn:/sbin/mingetty --autologin xbmc tty9
+    ...

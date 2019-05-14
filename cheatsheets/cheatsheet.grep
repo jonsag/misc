@@ -1,0 +1,14 @@
+
+
+print lines containing two search strings, and also print line numbers
+$ grep -n -e string1 -e string2 file.txt
+
+
+print everything except matching
+$ grep -v string
+
+
+grep this or that
+$ grep '\(this\|that\)'
+$ grep -E '(this|that)'
+

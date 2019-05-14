@@ -1,0 +1,99 @@
+mount drive as user with specific encoding
+# mount -t vfat /dev/sdb1 /mnt/tmp/ -o uid=1000,gid=100,utf8
+
+mount writeable for everyone
+# mount -t vfat  /dev/sdb1 /mnt/tmp -o rw,umask=0000
+
+
+mount .img file
+ find out the offset of the partition
+# fdisk -l /path/to/image
+
+ this gives for example:
+Disk Stick.img: 3984 MB, 3984588800 bytes
+249 heads, 6 sectors/track, 5209 cylinders, total 7782400 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0004bfaa
+
+    Device Boot      Start         End      Blocks   Id  System
+    Stick.img1   *         128     8015999     4007936    b  W95 FAT32
+
+
+ block-size of 512 bytes and the start-block is 128. The offset is 512 * 128 = 65536
+
+the mount command would be
+# mount -o loop,offset=65536 Stick.img /mnt/tmp
+
+other example
+# mount -t auto -o loop,offset=$((2048*512)) arch-live-usb_201105070115.img /mnt/tmp
+
+# fdisk -lu /path/disk.img
+# mount -o loop,offset=xxxx /path/disk.img /mnt/disk.img.partition
+
+
+
+
+
+# fdisk -l rpiweather-171205.img
+Disk rpiweather-171205.img: 4,5 GiB, 4863213568 bytes, 9498464 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x00090806
+
+Device                 Boot  Start      End  Sectors  Size Id Type
+rpiweather-171205.img1        8192   122879   114688   56M  c W95 FAT32 (LBA)
+rpiweather-171205.img2      122880 15523839 15400960  7,4G 83 Linux
+
+ # parted rpiweather-171205.img
+ GNU Parted 3.2
+ Using /home/jon/Downloads/Raspbian/rpiweather-171205.img
+ Welcome to GNU Parted! Type 'help' to view a list of commands.
+ (parted) unit
+ Unit?  [compact]? B
+ (parted) print
+ Error: Can't have a partition outside the disk!
+ Ignore/Cancel? i
+ Error: Can't have a partition outside the disk!
+ Ignore/Cancel?
+ Ignore/Cancel? Ignore
+ Model:  (file)
+ Disk /home/jon/Downloads/Raspbian/rpiweather-171205.img: 4863213568B
+ Sector size (logical/physical): 512B/512B
+ Partition Table: msdos
+ Disk Flags:
+
+Number  Start      End          Size         Type     File system  Flags
+ 1      4194304B   62914559B    58720256B    primary  fat16        lba
+ 2      62914560B  7948206079B  7885291520B  primary  ext4
+
+(parted) quit
+
+
+# dd if=rpiweather-171205.img of=img2.img bs=512 skip=$((62914560/512)) count=$((7885291520/4)) status=progress
+
+
+
+# losetup -f -P rpiweather-171205.img
+
+# losetup
+NAME       SIZELIMIT OFFSET AUTOCLEAR RO BACK-FILE
+/dev/loop0         0      0         0  0 /home/jon/Downloads/Raspbian/rpiweather-171205.img
+
+# lsblk -f
+NAME      FSTYPE LABEL UUID                                 MOUNTPOINT
+sda
+├─sda1    vfat         8831-CB62                            /boot/efi
+├─sda2    ext4         270a9865-33fd-4b1a-b9f6-883b9fdd4c51 /
+├─sda3    swap         4e6b53ff-935a-48d5-9413-61fd9be4ee62 [SWAP]
+└─sda4    ext4         d166a4cf-ff01-40db-ba39-205d43ad7227 /home
+sr0
+loop0
+├─loop0p1 vfat   boot  787C-2FD4
+└─loop0p2 ext4         3d81d9e2-7d1b-4015-8c2c-29ec0875f762
+
+# mount /dev/loop0p2 /mnt
+

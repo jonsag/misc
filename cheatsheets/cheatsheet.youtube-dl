@@ -1,0 +1,60 @@
+download only subs, no video
+$ youtube-dl --write-sub --sub-format srt --sub-lang sv --skip-download <URL>
+
+
+download playlist from youtube, with subs and	convert	subs to	srt
+$ youtube-dl --ignore-config --write-sub --convert-subs srt <playlist URL>
+
+$ youtube-dl --ignore-config --write-sub --convert-subs srt https://www.youtube.com/watch?list=PLZioPDnFPNsETq9h35dgQq80Ryx-beOli
+
+
+download urls from file
+$ youtube-dl --ignore-config --write-sub --convert-subs srt --batch-file playlist.url
+or
+$ (while read URL NAME; do [ "$URL" ] && youtube-dl -o "$NAME.%(episode)s.%(ext)s" "$URL"; done) < data.txt
+       where data.txt:
+       	     <url> <series>.s<season>e<episode>
+       for example
+       	   https://www.svtplay.se/video/18255490/doctor-who/doctor-who-sasong-10-the-doctor-falls?start=auto Doctor Who (2005).s10e13
+
+
+list video title and url
+$ youtube-dl --skip-download --get-url --get-title <url>
+
+
+all kinds of information
+$ youtube-dl ---skip-download -verbose --get-url --get-id --get-title --get-description --get-format --get-duration <url>
+
+
+list formats
+$ youtube-dl --skip-download --list-formats <url>
+
+download a specific format
+$ youtube-dl --format <format> <url>
+
+
+download all url:s in file
+$ youtube-dl --batch-file <url list>
+
+
+run from source
+$ cd ~/src
+$ git clone https://github.com/rg3/youtube-dl.git
+$ cd youtube-dl
+$ python -m youtube_dl <url>
+
+
+######## personal settings in ~/.config/youtube-dl/config example
+# youtube-dl personal config
+
+# set preferred limits for quality
+...
+-f 'bestvideo[tbr<=1900]+bestaudio/best[tbr<=1900]'
+
+# set output file name
+-o '%(series)s.%(season_number)sx%(episode_number)s.%(episode).%(ext)s'
+
+# subtitle options
+--write-sub
+--sub-format srt
+--sub-lang sv

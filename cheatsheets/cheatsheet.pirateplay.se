@@ -1,0 +1,4 @@
+start server standalone
+$ cd /var/www/localhost/htdocs/pirateplay.se
+$ python app.wsgi
+

@@ -1,0 +1,5 @@
+create tunnel on local machine
+# ssh -i .ssh/id_rsa -L 5900:localhost:5901 mythtv@amd64-4400
+
+in another terminal on local
+# vncviewer -compresslevel 9 -depth 8 -quality 0 localhost:5900

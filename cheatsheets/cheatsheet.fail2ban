@@ -1,0 +1,8 @@
+check jails running
+# fail2ban-client status
+
+check status of ssh-iptables jail
+# fail2ban-client status ssh-iptables
+
+test if jail work with log file
+# fail2ban-regex /path/to/file.log /etc/fail2ban/filter.d/sshd.conf

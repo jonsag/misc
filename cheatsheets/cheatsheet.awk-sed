@@ -1,0 +1,20 @@
+remove lines matching <PATTERN>
+---------------------------------------------------------------------------
+# awk '!/<PATTERN>/' FILE > temp && mv temp FILE
+
+
+replace all occurances of 'old' with 'new' in a file:
+---------------------------------------------------------------------------
+# sed -i 's/old/new/g' </PATH/TO/FILE>
+
+add sizes of all files in a directory
+---------------------------------------------------------------------------
+in kB
+# ls -l | awk '/^-/ { T += $5 } END { printf("%dK\n", T/1024); }'
+in MB
+# ls -l | awk '/^-/ { T += $5 } END { printf("%dM\n", T/1024/1024); }'
+in GB
+#ls -l | awk '/^-/ { T += $5 } END { printf("%dG\n", T/1024/1024/1024); }'
+
+# how much disk space is left at my location
+$ df -Ph . | tail -1 | awk '{print $4}'

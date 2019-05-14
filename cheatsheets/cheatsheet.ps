@@ -1,0 +1,8 @@
+find zombie processes
+# ps aux | awk '{ print $8 " " $2 }' | grep -w Z
+
+count zombie processes
+# ps aux | awk '{ print $8 " " $2 }' | grep -w Z | wc -l
+
+kill all zombie processes in one go
+# kill -HUP `ps -A -ostat,ppid | grep -e '^[Zz]' | awk '{print $2}'`

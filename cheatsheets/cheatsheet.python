@@ -1,0 +1,16 @@
+
+convert python2 to python3
+
+check for diffs
+$ 2to3 example.py
+
+write changes
+$ 2to3 -w example.py
+
+a backup file is created
+$ ls
+example.py
+example.py.bak
+
+
+

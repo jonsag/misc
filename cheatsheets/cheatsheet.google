@@ -1,0 +1,87 @@
+
+
+Install Google Drive Ocamlfuse
+# add-apt-repository ppa:alessandro-strada/ppa
+
+# apt update && sudo apt install google-drive-ocamlfuse
+
+Headless Usage & Authorization
+On another computer:
+   Sign in to your Google account and create a project: https://console.cloud.google.com/
+   Click "API Manager" then "Library" in the left-hand pane (will take you to https://console.cloud.google.com/apis/library). Click on "Drive API", then "ENABLE API".
+   Click "Credentials" in the left hand pane, then click on the button "Create Credentials" (OAuth client ID)
+   	 Choose "Other"
+   	 Choose any product name, e.g "My OCAMLDrive".
+   	 Click "Create". You will get a Client ID, a Client Secret.
+
+client ID:
+461640863326-fvfmhari7fn5942hmk0d9t50bbmr6spj.apps.googleusercontent.com
+client secret:
+8XQzxhnTw9iVXBd5QO8gzmtF
+
+as root, create link
+# ln -s /home/pi/.opam/system/bin/google-drive-ocamlfuse /usr/local/bin/google-drive-ocamlfuse
+
+
+run the app for the first time
+$  google-drive-ocamlfuse -headless -id 461640863326-fvfmhari7fn5942hmk0d9t50bbmr6spj.apps.googleusercontent.com -secret 8XQzxhnTw9iVXBd5QO8gzmtF
+
+copy link in the answer, and open it in a browser
+
+copy the code from browser and paste in where asked for
+
+
+create dir to mount in
+$ mkdir GoogleDrive
+
+
+mount
+$ google-drive-ocamlfuse GoogleDrive
+
+
+unmount
+$ fusermount -u GoogleDrive
+
+
+
+
+
+$ google-drive-ocamlfuse
+
+
+
+
+
+create an empty folder in which to mount Google Drive
+$ mkdir ~/GoogleDrive
+
+mount it there
+$ google-drive-ocamlfuse ~/googledrive
+
+unmount the fuse filesystem
+$ fusermount -u ~/google-drive
+
+
+--------------------------------------------------------------------------
+
+
+How to install from source on Debian Jessie
+https://github.com/astrada/google-drive-ocamlfuse/wiki/How-to-install-from-source-on-Debian-Jessie
+
+# apt-get install opam ocaml make fuse camlp4-extra build-essential pkg-config
+
+# groupadd fuse
+
+# adduser pi fuse
+log out and in to make this effective
+
+# chown root.fuse /dev/fuse
+# chmod 660 /dev/fuse
+
+$ opam init
+$ opam update
+$ opam install depext
+$ eval `opam config env`
+$ opam depext google-drive-ocamlfuse
+$ opam install google-drive-ocamlfuse
+$ . /home/pi/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true

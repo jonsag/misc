@@ -1,0 +1,82 @@
+Switching using a single kernel and systemd
+
+/boot/grub2/grub.cfg	 Before:
+----------------------------------------------------
+menuentry 'Gentoo Linux' {
+	  	  	 root=hd0,1
+	        	 linux /boot/bzImage root=PARTUUID=11111111-2222-3333-4444-555555555555 init=/usr/lib/systemd/systemd console=tty1
+			 }
+
+/boot/grub2/grub.cfg	 After:
+-----------------------------------------------------
+menuentry 'Gentoo Linux - Nouveau' {
+          	  	  	   root=hd0,1
+	        		   linux /boot/bzImage root=PARTUUID=11111111-2222-3333-4444-555555555555 init=/usr/lib/systemd/systemd console=tty1 modprobe.blacklist=nvidia systemd.setenv=GPUMOD=nouveau
+				   }
+
+menuentry 'Gentoo Linux - Nvidia' {
+          	  	  	  root=hd0,1
+	        		  linux /boot/bzImage root=PARTUUID=11111111-2222-3333-4444-555555555555 init=/usr/lib/systemd/systemd console=tty1 modprobe.blacklist=nouveau systemd.setenv=GPUMOD=nvidia
+				  }
+
+
+/etc/local.d/nvidia.start	  OpenGL
+------------------------------------------------------
+#!/bin/bash
+
+if [[ "$GPUMOD" == "nvidia" ]] ; then
+   if [[ $(eselect opengl show) != nvidia ]] ; then
+      eselect opengl set nvidia &>/dev/null
+   fi
+   cat > /etc/X11/xorg.conf.d/01-nv.conf << EOF
+   Section "Device"
+   Identifier "Device0"
+	   Driver       "nvidia"
+	   Option       "NoLogo" "True"
+   EndSection
+   EOF
+else
+   if [[ $(eselect opengl show) != xorg-x11 ]] ; then
+      eselect opengl set xorg-x11 &>/dev/null
+   fi
+   cat > /etc/X11/xorg.conf.d/01-nv.conf << EOF
+   Section "Device"
+   	   Identifier   "Device0"
+   	   Driver       "nouveau"
+   EndSection
+   EOF
+fi
+
+
+/etc/local.d/nvidia.start	OpenGL + OpenCL
+------------------------------------------------------
+#!/bin/bash
+
+if [[ "$GPUMOD" == "nvidia" ]] ; then
+   if [[ $(eselect opengl show) != nvidia ]] ; then
+      eselect opengl set nvidia &>/dev/null
+      eselect opencl set nvidia &>/dev/null
+   fi
+   cat > /etc/X11/xorg.conf.d/01-nv.conf << EOF
+   Section "Device"
+   Identifier   "Device0"
+   		Driver       "nvidia"
+		Option       "NoLogo" "True"
+   EndSection
+   EOF
+else
+   if [[ $(eselect opengl show) != xorg-x11 ]] ; then
+      eselect opengl set xorg-x11 &>/dev/null
+      eselect opencl set mesa &>/dev/null
+   fi
+   cat > /etc/X11/xorg.conf.d/01-nv.conf << EOF
+   Section "Device"
+   Identifier   "Device0"
+   		Driver       "nouveau"
+   EndSection
+   EOF
+fi
+
+set executable
+# chmod +x /etc/local.d/nvidia.start
+

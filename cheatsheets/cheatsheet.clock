@@ -1,0 +1,12 @@
+set clock
+# /usr/sbin/ntpdate se.pool.ntp.org
+
+check hardware clock
+# hwclock -r
+
+set hardware clock from system time
+# hwclock --systohc
+
+set system time from hardware clock
+# hwclock --hctosys
+

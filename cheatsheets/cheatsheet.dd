@@ -1,0 +1,12 @@
+copy partition to image
+# dd if=/dev/<PARTITION> conv=sync,noerror bs=64K | gzip -c  > <PATH TO>/<BACKUP>.gz
+
+# dd if=/dev/sdi bs=64K conv=noerror,sync status=progress of=rpiweather-171205.img
+
+restore image to partition
+# gunzip -c <PATH TO>/<BACKUP>.gz | dd of=/dev/<PARTITION>
+
+# unzip -p 2017-11-29-raspbian-stretch.zip | dd of=/dev/sdi bs=4M conv=fsync ststus=progress
+
+# dd bs=4M if=2017-11-29-raspbian-stretch.img of=/dev/sdi conv=fsync status=progress
+

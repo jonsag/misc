@@ -1,0 +1,17 @@
+----------------------------------------------
+To capture all HTTP GET requests to port 80:
+# sudo ngrep -W byline -qilw 'get' tcp dst port 80
+
+----------------------------------------------
+Still, that would show you the whole request. (Try for yourself, if you're a Super User!) To limit that output some more to show only lines with  -> , get or host:
+# sudo ngrep -W byline -qilw 'get' tcp dst port 80 | grep -i " -> \|get\|host"
+
+----------------------------------------------
+Or, to capture all requests to port 80, but ignore those with the Referer header set (as set when requesting embedded images etcetera, but also set when clicking a link in a web page, thus only showing requests that are typed into a browser's location bar directly, or are opened in a new window, or are opened from a bookmark or email):
+# sudo ngrep -W byline -qilwv 'referer' tcp dst port 80 | grep -i " -> \|get\|host"
+
+----------------------------------------------
+Also sniffer tools like Wireshark have command line options. And, just as an aside and far more more basic, tcpdump is installed on most Linux distributions:
+# sudo tcpdump -Alfq -s 1024 'tcp dst port 80 and ip[2:2] > 40 and tcp[tcpflags] & tcp-push != 0' | grep -i " > \|get\|host"
+
+----------------------------------------------

@@ -1,0 +1,39 @@
+only shrink larger
+$ convert pic.png -resize 64x64\>  shrink_pic.gif
+
+resize multiple
+$ convert '*.png' -resize 320x240 thumbnail%03d.png
+
+resize all png's in current directory and output to another folder
+$ mogrify -resize 1024x576 -path /<path>/<to>/<output>/<directory> *.png
+
+change file format from jpg to png
+$ mogrify -format png *.jpg
+
+extract images from pdf
+$ convert -verbose -colorspace RGB -interlace none -density 400 -quality 100 yourPdfFile.pdf 00%d.jpeg
+
+extract images from pdf and then compress them into a z-file
+$ convert -verbose -colorspace RGB -interlace none -density 400 -quality 100 yourPdfFile.pdf 00%d.jpg && zip -vm comic.cbz *.jpg
+
+create animated gif from series of jpg:s, 25fps, reversing and looping
+$ convert -delay 1x25 *.jpg -reverse -delay 1x25 *.jpg -loop 0 animated.gif
+
+optimizing animated gif
+$ convert -layers Optimize animation.gif animation_small.gif
+
+remove 10 pixels from each side of an image
+$ convert in.gif -shave 10x10 out.gif
+remove pixels from series of image
+$ convert *.jpg -shave 200x100 out%04d.jpg
+
+resize to fixed width
+$ convert input.jpg -resize [desired width] output.jpg
+$ convert *.gif -resize 320 bildekor%03d.jpg
+
+resize to fixed height
+$ convert input.png -geometry x600 output.png
+$ convert *.gif -geometry x240 bildekor%03d.png
+
+extract images from gif
+$ convert image.gif out%05d.png

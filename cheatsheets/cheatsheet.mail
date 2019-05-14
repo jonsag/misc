@@ -1,0 +1,37 @@
+edit /etc/ssmtp/ssmtp.conf
+
+     root=jon@sagebrand.se
+
+     mailhub=smtp.gmail.com:587
+     rewriteDomain=
+     hostname=smtp.gmail.com:587
+     UseSTARTTLS=YES
+     AuthUser=jonsagebrand
+     AuthPass=plokijuh01852
+     FromLineOverride=YES
+
+
+send mail from command line
+# mail -s 'subject line' recipient@domain.com < file.txt
+
+
+IncrediblePBX
+Configuring Exim to use Gmail as SMTP Relay (ignore hyphens below):
+--------------------------------------------------------------------------
+-Run /root/email-setup:
+-Choose second option: Mail Sent by SmartHost
+-System Mail Name: localhost
+-Listen on: 127.0.0.1
+-Other Domains: leave blank
+-Other Machines: leave blank
+-IP of Outgoing SmartHost: smtp.gmail.com::587 (you must use two colons!)
+-Hide Local Mail Name: No
+-Dial on Demand: No
+-Delivery Method: mbox
+-Split Config: No
+-Add Your Gmail Credentials to passwd.client: nano -w /etc/exim4/passwd.client
+ Entry should look like this: *.google.com:yourname@gmail.com:yourpassword
+-Update Exim by running this command: update-exim4.conf
+-Restart your mail gateway: service sendmail restart
+
+

@@ -1,0 +1,83 @@
+z is for gzip
+v is for verbose
+c is for create
+x is for extract
+f is for file
+
+-j, --bzip2
+    filter the archive through bzip2
+-z, --gzip
+    filter the archive through gzip
+-J, --xz
+    filter the archive through xz
+
+-t, --list
+    list the contents of an archive
+
+
+pack a catalog to tar.gz
+$ tar zcvf <PATH>/<TO>/<FILE>.tar.gz /<PATH>/<TO>/<PACK>
+
+
+pack to tar.gz with maximum compression
+$ GZIP=-9 tar zcvf <PATH>/<TO>/<FILE>.tar.gz /<PATH>/<TO>/<PACK>
+
+
+unpack tar.gz to specific path
+$ tar zxvf <PATH>/<TO>/<FILE>.tar.gz -C /<PATH>/<TO>/<TARGET>
+
+
+pack to tar.bz2
+$ tar jcvf <PATH>/<TO>/<FILE>.tar.bz2 file1 file2 file3 ...
+
+
+unpack tar.bz2 to specific path
+$ tar jxvf <PATH>/<TO>/<FILE>.tar.bz2 -C /<PATH>/<TO>/<TARGET>
+
+
+unpack .gz
+$ gunzip file.gz
+
+
+unpack .tar
+$ tar xvf file.tar
+
+
+unpack tar.xz
+$ tar -xJf file.tar.xz
+
+
+unpack an entire catalog full of tar.gz
+$ for i in `ls *.tar.gz`; do tar zxvf $i; done
+
+
+unpack an entire catalog full of tar.bz2
+$ for i in `ls *.tar.bz2`; do tar jxvf $i; done
+
+
+pack to tar.xz with maximum compression
+$ XZ_OPT=-9 tar -Jcvf <PATH>/<TO>/<FILE>.tar.xz /<PATH>/<TO>/<PACK>
+
+
+pack to 7z (7zip) with maximum compression
+$ 7za a -mx=9 /<PATH>/<TO>/<PACK>.7z /<PATH>/<TO>/<PACK>
+
+
+list the contents of a tar.gz file
+$ tar -ztvf <FILE>.tar.gz
+
+
+list the contents of a tar.bz2 file
+$ tar -jtvf <FILE>.tar.bz2
+
+
+list the contents of a tar file
+$ tar -tvf <FILE>.tar
+
+
+list the content of zip file
+$ unzip -l archive.zip
+
+
+pack all files to zip
+$ zip name_of_ziparchive *

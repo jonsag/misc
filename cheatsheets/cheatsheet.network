@@ -1,0 +1,65 @@
+list dns servers
+$ nmcli device show <interface> | grep IP4.DNS
+
+
+scan for wireless networks
+# iwlist wlan0 scan
+
+
+list network devices
+# ip a
+
+
+list wireless network devices
+# iwconfig
+
+
+bring up wireless network device
+# ip link set wlan0 up
+
+
+install wpasupplicant
+# apt-get install wpasupplicant
+
+
+use the WPA passphrase to calculate the correct WPA PSK hash for your SSID
+# wpa_passphrase TP-LINK_96738A
+  enter passphrase
+copy psk-hash from output
+network={
+	ssid="TP-LINK_96738A"
+	#psk="34345399"
+	psk=dd6025a93b84596c6eaf52e57f22060bf14df3e8bc0a5fc4be4e9846e41d73aa
+}
+
+edit conf file
+# emacs /etc/wpa_supplicant/wpa_supplicant.conf
+  network={
+	ssid="TP-LINK_96738A"
+	psk="34345399"
+  }
+
+
+reconfigure network
+# wpa_cli -i wlan0 reconfigure
+
+
+verify
+# ifconfig wlan0
+
+
+OR perhaps
+
+
+create and edit file for wireless device
+# emacs /etc/network/interfaces.d/wlan0
+  auto wlan0
+  iface wlan0 inet dhcp
+  	wireless-essid TP-LINK_96738A
+	psk=dd6025a93b84596c6eaf52e57f22060bf14df3e8bc0a5fc4be4e9846e41d73aa
+
+
+bring up device
+# ifup wlan0
+
+

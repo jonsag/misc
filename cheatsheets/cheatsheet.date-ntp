@@ -1,0 +1,20 @@
+see time and date
+$ date
+
+display date in yymmdd format
+$ date +"%y%m%d"
+
+turn on 4 digit year display
+date +"%Y-%m-%d"
+
+display time only
+date +"%T"
+
+save time/date format to the shell variable
+$ NOW=$(date +"%m-%d-%Y")
+$ echo $NOW
+
+set time
+# ntpdate -s time.nist.gov
+or
+# ntpdate -s 0.se.pool.ntp.org

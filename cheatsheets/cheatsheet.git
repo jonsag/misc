@@ -1,0 +1,8 @@
+list branches, starred is cthe current one
+$ git branch
+
+error: [rejected]        master -> master (non-fast-forward)
+
+show which commit I am on
+$ git log -1 --oneline
+exit with :q

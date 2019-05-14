@@ -1,0 +1,24 @@
+show outdated packages
+# pip freeze | cut -d = -f 1 | xargs -n 1 pip search | grep -B2 'LATEST:'
+
+
+upgrade outdated packages
+# pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+
+
+upgrade specific package
+# pip install --upgrade <package>
+
+
+list installed packages
+# pip freeze
+
+
+remove/uninstall package
+# pip uninstall <package>
+
+
+search for package
+# pip search <package>
+
+

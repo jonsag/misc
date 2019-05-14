@@ -1,0 +1,17 @@
+add prefix to files
+# for filename in *; do mv "$filename" "<PREFIX>.$filename"; done;
+
+replace string in filename
+# find . -name "*.avi" -print | awk '{ f=$0; sub( ".firends." , "." ); print "mv " f " " $0 }' | sh
+
+remove the first three(3) characters in every filename
+$ rename 's/(.{3})(.*)$/$2/' *.*
+add -n for test run
+
+##### perl-rename #####
+change from 'old' to 'new'
+$ perl-rename 's/old/new/' *
+
+insert 'prefix' at beginning
+$ rename 's/^/prefix/' *
+

@@ -1,0 +1,11 @@
+# reload exports file /etc/exports
+# exportfs -ra
+
+list exports
+# showmount -e <HOSTNAME OR IP>
+
+mount in fstab
+      <server>:</remote/export></local/directory><nfs-type><options> 0 0
+
+      amd64-4400:/home/mythtv/Downloads /home/jon/mnt/amd64-4400/Downloads nfs user,rw 0 0
+

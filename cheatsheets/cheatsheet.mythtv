@@ -1,0 +1,13 @@
+Add button to main menu
+# emacs /usr/share/mythtv/themes/defaultmenu/mainmenu.xml
+  add rows like this:
+      <button>
+        <type>MENU_XBMC</type>
+        <text>Go to XBMC</text>
+        <action>EXEC /usr/bin/xbmc</action>
+      </button>
+
+
+
+restore database from backup
+$ mythconverg_restore.pl --drop_database --create_database --filename mythconverg-1317-20170603052001.sql.gz

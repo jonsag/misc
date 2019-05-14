@@ -1,0 +1,125 @@
+The database server needs to be running to do any of these checks. Log in as 'root' via SSH and:
+
+Shows you if any need repair:
+# myisamchk --check /var/lib/mysql/*/*.MYI
+
+Then try 'safe-recover' first:
+# myisamchk --safe-recover /var/lib/mysql/*/*.MYI
+
+and, if neither that nor this works:
+# myisamchk --recover /var/lib/mysql/*/*.MYI
+
+Then use the 'force' flag:
+# myisamchk --safe-recover --extend-check --force /var/lib/mysql/*/*.MYI
+or:
+#myisamchk --recover --extend-check --force /var/lib/mysql/*/*.MYI
+
+reapir
+# mysqlcheck --all-databases -r
+# mysqlcheck -u root -p --all-databases -r
+
+analyze
+# mysqlcheck --all-databases -a
+
+optimize
+# mysqlcheck --all-databases -o
+
+
+
+add another column into existing database
+> ALTER TABLE blog ADD `allItemsRetrieved` BOOLEAN DEFAULT 0 AFTER `blogUpdated`;
+
+
+
+find and count rows with same value in hash field, from table videmetadata
+> select hash, count(*) as c from videometadata group by hash having c >1 order by c desc;
+
+
+
+delete the last duplicate on the column hash, from table videometadata
+> delete from videometadata where intid in ( select intid from ( select intid from videometadata a group by hash having count(*) > 1 ) b );
+
+
+
+delete all data in table tablename
+> TRUNCATE TABLE tablename;
+
+
+
+get size of databases
+> SELECT table_schema "Data Base Name", SUM( data_length + index_length) / 1024 / 1024 
+"Data Base Size in MB" FROM information_schema.TABLES GROUP BY table_schema ;
+
+
+
+get size of tables in database (replace shema_name with your database)
+> SELECT TABLE_NAME, table_rows, data_length, index_length, 
+round(((data_length + index_length) / 1024 / 1024),2) "Size in MB"
+FROM information_schema.TABLES WHERE table_schema = "schema_name";
+
+
+
+random sqls:
+> SELECT country, COUNT(*) AS `times` FROM fail2ban GROUP BY country ORDER BY `times` DESC;
+> SELECT isp, COUNT(*) AS `times` FROM fail2ban GROUP BY isp ORDER BY `times` DESC;
+> SELECT CONCAT(HOUR(timestamp), ':00-', HOUR(timestamp)+1, ':00') AS Hours, COUNT(*) AS `usage` FROM fail2ban group by hour(timestamp);
+
+
+
+create new user
+> CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'mypass';
+> GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
+
+
+
+delete all data
+$ mysqldump -d -uuser -ppass --add-drop-table databasename > databasename.sql
+$ mysql -uuser -ppass databasename < databasename.sql
+
+
+when was table updated
+> SELECT UPDATE_TIME FROM information_schema.tables WHERE  TABLE_SCHEMA = 'dbname' AND TABLE_NAME = 'tabname'
+
+> SHOW TABLE STATUS FROM your_database LIKE 'your_table'
+
+
+find row with the lowest value
+> SELECT * FROM pieces WHERE price =  ( SELECT MIN(price) FROM pieces )
+
+> SELECT * FROM tempLog WHERE value=(SELECT MAX(value) FROM tempLog WHERE sensorid='5')
+
+
+show time
+> SELECT NOW()
+
+show day of week in number, sunday=0 saturday=6
+> SELECT DATE_FORMAT("2008-05-15", "%w")
+to make monday=0 sunday=6
+>  SELECT DATE_FORMAT(DATE_ADD("2008-05-15", INTERVAL - 1 DAY), "%w")
+
+show day of week in number, monday=0 and sunday=6
+> SELECT WEEKDAY(NOW())
+to make monday=1 sunday=7
+> SELECT WEEKDAY(NOW()) + 1
+
+show day of week in number, sunday=1 saturday=7
+> SELECT DAYOFWEEK('2008-05-15')
+to make monday=1 sunday=7
+> SELECT DAYOFWEEK(DATE_ADD(NOW(), INTERVAL - 1 DAY))
+
+
+show days name if sunday=0 saturday=6
+> SELECT DAYNAME(CONCAT("1970-09-2", <daynumber>))
+
+show days name where monday=0 sunday=6
+> SELECT DAYNAME(CONCAT("1970-09-2", <daynumber> + 1))
+
+show days name where monday=1 sunday=7
+> SELECT DAYNAME(DATE_ADD(CONCAT("1970-09-2", <daynumber> + 1), INTERVAL - 1 DAY))
+
+
+
+select all ip's, group by ip, count count and sort them 
+> SELECT COUNT(*), ip FROM fail2ban GROUP BY ip ORDER BY COUNT(*)
+
+

@@ -1,0 +1,15 @@
+writing udev rules
+---------------------------------------------------------------------------
+# udevadm info -a -p /sys/block/<disk> | grep ATTRS{product}
+and
+# udevadm info -a -p /sys/block/<disk> | grep ATTRS{serial}
+
+add something like the following to /etc/udev/rules.d/99-usb-storage.rules
+## iomega1, removable harddrive -------------------------------------------
+KERNEL=="ub*", ATTRS{product}=="USB to Serial-ATA bridge", ATTRS{serial}=="FAFFFFF0FDF2FFF1BF823393", SYMLINK+="iomega1%n", RUN+="/bin/mount /home/mythtv/iomega1"
+
+add line to /etc/fstab, like
+/dev/iomega11           /home/mythtv/iomega1            ntfs-3g                 locale=sv_SE.utf8,user,rw,defaults,force  0 0
+
+make sure mount point exists and then
+# udevadm control --reload-rules

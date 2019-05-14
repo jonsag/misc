@@ -1,0 +1,3 @@
+set series id
+$ tvnamer --series-id <id>
+

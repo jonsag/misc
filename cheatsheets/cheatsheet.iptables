@@ -1,0 +1,11 @@
+list rules
+# iptables -L
+
+list prerouting rules
+# iptables -L -n -t nat
+
+list with line numbers
+# iptables -L -n -t nat --line-numbers
+
+delete PREROUTING rule with line number 2
+# iptables -t nat -D PREROUTING 2

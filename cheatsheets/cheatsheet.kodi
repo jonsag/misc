@@ -1,0 +1,17 @@
+Update Music Library
+# curl -i -X POST -d "{\"jsonrpc\": \"2.0\", \"method\": \"AudioLibrary.Scan\", \"id\": \"mybash\"}" -H "content-type:application/json" http://myth:plokijuh01@192.168.10.73:8080/jsonrpc
+
+Update Video Library
+# curl -i -X POST -d "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\", \"id\": \"mybash\"}" -H "content-type:application/json" http://myth:plokijuh01@192.168.10.73:8080/jsonrpc
+
+Clean Music Library
+# curl -i -X POST -d "{\"jsonrpc\": \"2.0\", \"method\": \"AudioLibrary.Clean\", \"id\": \"mybash\"}" -H "content-type:application/json" http://myth:plokijuh01@192.168.10.73:8080/jsonrpc
+
+Clean Video Library
+# curl -i -X POST -d "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Clean\", \"id\": \"mybash\"}" -H "content-type:application/json" http://myth:plokijuh01@192.168.10.73:8080/jsonrpc
+
+Run Trakt Addon sync
+# curl -i -X POST -d {\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"Addons.ExecuteAddon\",\"params\":{\"addonid\":\"script.trakt\"}} -H "content-type:application/json" http://myth:plokijuh01@192.168.10.73:8080/jsonrpc
+
+Check if Kodi is running remotely
+# curl -s 192.168.10.73:8080 >NUL && echo Connected. && goto DoStuff || echo Fail. && goto DoNotDoStuff

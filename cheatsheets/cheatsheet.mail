@@ -6,8 +6,8 @@ edit /etc/ssmtp/ssmtp.conf
      rewriteDomain=
      hostname=smtp.gmail.com:587
      UseSTARTTLS=YES
-     AuthUser=jonsagebrand
-     AuthPass=plokijuh01852
+     AuthUser=<google username>
+     AuthPass=<google password>
      FromLineOverride=YES
 
 

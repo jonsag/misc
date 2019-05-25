@@ -35,3 +35,36 @@ Configuring Exim to use Gmail as SMTP Relay (ignore hyphens below):
 -Restart your mail gateway: service sendmail restart
 
 
+Ubuntu ssmtp
+--------------------
+$ sudo apt install ssmtp
+
+
+
+
+Ubuntu sendmail
+--------------------
+$ sudo apt install sendmail mailutils sendmail-bin
+
+$ sudo mkdir -m 700 /etc/mail/authinfo/
+$ cd /etc/mail/authinfo/
+$ sudo emacs gmail-auth (can have any name)
+	add:
+		AuthInfo: "U:root" "I:YOUR GMAIL EMAIL ADDRESS" "P:YOUR PASSWORD"
+		
+$ sudo makemap hash gmail-auth < gmail-auth
+$ sudo emacs /etc/mail/sendmail.mc
+	add before first "MAILER" definition:
+		define(`SMART_HOST',`[smtp.gmail.com]')dnl
+		define(`RELAY_MAILER_ARGS', `TCP $h 587')dnl
+		define(`ESMTP_MAILER_ARGS', `TCP $h 587')dnl
+		define(`confAUTH_OPTIONS', `A p')dnl
+		TRUST_AUTH_MECH(`EXTERNAL DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+		define(`confAUTH_MECHANISMS', `EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+		FEATURE(`authinfo',`hash -o /etc/mail/authinfo/gmail-auth.db')dnl
+
+$ sudo make -C /etc/mail
+$ sudo service sendmail reload
+
+
+

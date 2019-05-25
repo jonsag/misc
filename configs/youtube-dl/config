@@ -1,0 +1,15 @@
+# youtube-dl personal config
+
+# set preferred limits for quality
+-f 'bestvideo[tbr<=1900]+bestaudio/best[tbr<=1900]'
+
+#set output file name
+-o '%(series)s.%(season_number)sx%(episode_number)s.%(episode)s.%(ext)s'
+
+# subtitle options
+--write-sub
+--sub-format srt/wsrt
+--sub-lang sv,se,Svenska,no,da
+--convert-subs srt
+
+--no-geo-bypass

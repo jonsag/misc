@@ -1,0 +1,18 @@
+# ~/.svtplay-dl.yaml
+
+default:
+  subtitle: true
+  merge_subtitle: true
+  quality: 1600
+  flexibleq: 500
+  filename: "{title}.s{season}e{episode}.{episodename}-{service}.{ext}"
+  
+service:
+  tv4play:
+    username: j<username for tv4play.se>
+    password: <password -"->
+
+service:
+  viafree:
+    username: <username for viafree.se>
+    password: <password -"->

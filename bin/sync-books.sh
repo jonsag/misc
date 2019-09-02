@@ -4,7 +4,8 @@ SERVER="192.168.10.6"
 
 BOOKSDIR="/home/jon/Documents/CalibreLibrary"
 GOOGLEDIR="/home/jon/GoogleDrive/CalibreLibrary"
-SERVERDIR="root@$SERVER:/home/mythtv/Calibre\ Library"
+SERVERPATH="/home/jon/mnt/usb/hg1/Calibre\ Library"
+SERVERDIR="root@$SERVER:$SERVERPATH"
 
 #OPTIONS="-avzh --progress --delete"
 #EXCLUDE="--exclude metadata.db metadata_db_prefs_backup.json"
@@ -33,8 +34,8 @@ GOOGLEMAXSIZE="--max-size=10M"
 
 SERVEROPTIONS="-pruvzh --progress --delete"
 SERVEREXCLUDE=""
-SERVERUSER="mythtv"
-SERVERGROUP="users"
+SERVERUSER="calibre"
+SERVERGROUP="calibre"
 #SERVERCHOWN="--chown=mythtv:users"
 #SERVERUSERMAP="--usermap=jon:mythtv"
 SERVERUSERMAP=""
@@ -60,5 +61,5 @@ rsync $SERVEROPTIONS $SERVEREXCLUDE $SERVERCHOWN $SERVERUSERMAP $SERVERGROUPMAP 
 
 echo
 echo "Setting owner to $SERVERUSER and group to $SERVERGROUP for top .db-file..."
-echo "ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP /home/mythtv/Calibre\ Library/*.db'"
-ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP /home/mythtv/Calibre\ Library/*.db'
+echo "ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP $SERVERPATH/*.db'"
+ssh root@$SERVER  'chown $SERVERUSER:$SERVERGROUP $SERVERPATH/*.db'

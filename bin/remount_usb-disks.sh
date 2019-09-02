@@ -7,20 +7,28 @@ arg1=$1
 arg2=$2
 arg3=$3
 
+#if [ -z $arg1 ]; then
+#    arg1=" "
+#fi
+#if [ -z $arg2 ]; then
+#    arg2=" "
+#fi
+#if [ -z $arg3 ]; then
+#    arg3=" "
+#fi
+
 ##### check if root
 if [ "$EUID" -ne 0 ]; then
    echo -e %"ERROR: Must be root\n       Exiting ..."
    exit 4
 fi
 
-if [ $arg1 = "test" ] || [ $arg2 = "test" ] || [ $arg3 = "test" ]; then
+if [ "$arg1" = "test" ] || [ "$arg2" == "test" ] || [ "$arg3" == "test" ]; then
     echo "Will run as test"
     test="true"
 else
     test="false"
 fi
-
-exit
 
 #################### server
 echo
@@ -64,7 +72,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 	    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
 		echo "$disk is mounted"
 		##### unmount disk
-		if [ $test = "true" ]; then
+		if [ $test == "true" ]; then
 		    echo -e "--- Running in test-mode.\n    Will not unmount disk"
 		else
 		    umount $mountPoint/$disk
@@ -80,7 +88,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 		echo "ERROR: $disk is not mounted"
 	    fi
 	    ##### mount disk
-	    if [ $test = "true" ]; then
+	    if [ $test == "true" ]; then
 		echo -e "--- Running in test-mode.\n    Will not mount disk"
 	    else
 		mount $mountPoint/$disk
@@ -108,7 +116,7 @@ echo "----------"
 
 if systemctl is-active $serviceName --quiet; then
     echo "Service '"$serviceName"' is running"
-    if [ $test = "true" ]; then
+    if [ $test == "true" ]; then
 	echo -e "--- Running in test-mode.\n    Will not restart service"
     else
 	echo "Restarting ..."
@@ -116,7 +124,7 @@ if systemctl is-active $serviceName --quiet; then
     fi
 else
     echo "WARNING: Service '"$serviceName"' is not running"
-    if [ $test = "true" ]; then
+    if [ $test == "true" ]; then
 	echo -e "--- Running in test-mode.\n    Will not start service"
     else
 	echo "Starting ..."

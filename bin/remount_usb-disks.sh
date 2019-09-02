@@ -19,7 +19,7 @@ arg3=$3
 
 ##### check if root
 if [ "$EUID" -ne 0 ]; then
-   echo -e %"ERROR: Must be root\n       Exiting ..."
+   echo -e "ERROR: Must be root\n       Exiting ..."
    exit 4
 fi
 

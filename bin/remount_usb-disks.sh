@@ -3,33 +3,32 @@
 serviceName="nfs-kernel-server"
 mountPoint="/home/jon/mnt/usb"
 
+# colours
 def='\033[39m'
 red='\033[31m'
 yel='\033[33m'
 gre='\033[32m'
 
+##### check if root
+if [ "$EUID" -ne 0 ]; then
+   echo -e $red"ERROR"$def":   Must be root\n         Exiting ..."
+   exit 4
+fi
+
+# arguments
 arg1=$1
 arg2=$2
 arg3=$3
 
-##### check if root
-if [ "$EUID" -ne 0 ]; then
-   echo -e $red"ERROR"$def": Must be root\n       Exiting ..."
-   exit 4
-fi
-
-echo
 if [ "$arg1" == "test" ] || [ "$arg2" == "test" ] || [ "$arg3" == "test" ]; then
-    echo -e $yel"Will run as test"$def
+    echo -e "\n"$yel"NOTE"$def":    Will run as test"$def
     test="true"
 else
     test="false"
 fi
 
 #################### server
-echo
-echo "Stopping nfs server..."
-echo "----------"
+echo -e "\nStopping nfs server ...\n----------"
 
 if systemctl is-active $serviceName --quiet; then
     echo -e $gre"OK"$def":      Service '"$serviceName"' is running"
@@ -50,13 +49,10 @@ else
 fi
 
 #################### disks
-echo
-echo "Checking mounts ..."
+echo -e "\nChecking mounts ..."
 
 for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
-    echo
-    echo "Testing $mountPoint/$disk ..."
-    echo "----------"
+    echo -e "\nTesting $mountPoint/$disk ...\n----------"
 
     ##### check if device exist
     if [ -e /dev/$disk ]; then
@@ -115,9 +111,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 done
 
 #################### server
-echo
-echo "Checking nfs server..."
-echo "----------"
+echo -e "\nChecking nfs server...\n----------"
 
 if systemctl is-active $serviceName --quiet; then
     echo -e $gre"OK"$def":      Service '"$serviceName"' is running"

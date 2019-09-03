@@ -94,7 +94,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 		    mount $mountPoint/$disk
 		    ##### check if disk was successfully mounted
 		    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
-			echo -e $gre"OK"$def":      Successfully unmounted"
+			echo -e $gre"OK"$def":      Successfully mounted"
 		    else
 			echo -e "ERROR: Could not mount disk\n       Exiting ..."
 			exit 3

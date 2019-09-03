@@ -3,18 +3,24 @@
 serviceName="nfs-kernel-server"
 mountPoint="/home/jon/mnt/usb"
 
+def='\033[39m'
+red='\033[31m'
+yel='\033[33m'
+gre='\033[32m'
+
 arg1=$1
 arg2=$2
 arg3=$3
 
 ##### check if root
 if [ "$EUID" -ne 0 ]; then
-   echo -e "ERROR: Must be root\n       Exiting ..."
+   echo -e $red"ERROR"$def": Must be root\n       Exiting ..."
    exit 4
 fi
 
+echo
 if [ "$arg1" == "test" ] || [ "$arg2" == "test" ] || [ "$arg3" == "test" ]; then
-    echo "Will run as test"
+    echo -e $yel"Will run as test"$def
     test="true"
 else
     test="false"
@@ -26,21 +32,21 @@ echo "Stopping nfs server..."
 echo "----------"
 
 if systemctl is-active $serviceName --quiet; then
-    echo "Service '"$serviceName"' is running"
+    echo -e $gre"OK"$def":      Service '"$serviceName"' is running"
     if [ $test == "true" ]; then
-	echo -e "--- Running in test-mode.\n    Will not stop service"
+	echo -e $yel"NOTE"$def":    Running in test-mode\n         Will not stop service"
     else
-	echo "Stopping ..."
+	echo "         Stopping ..."
 	service $serviceName stop	
 	if systemctl is-active $serviceName --quiet; then
-	    echo -e "ERROR: Did not manage to stop service\n       Exiting.."
+	    echo -e $red"ERROR"$def":   Did not manage to stop service\n         Exiting.."
 	    exit 1
 	else
-	    echo "Stopped service successfully"
+	    echo -e $gre"OK"$def":      Stopped service successfully"
 	fi
     fi
 else
-    echo -e "WARNING: Service '"$serviceName"' is not running\n         Will try to start service in the end"
+    echo -e $yel"WARNING"$def": Service '"$serviceName"' is not running\n         Will try to start service in the end"
 fi
 
 #################### disks
@@ -54,40 +60,49 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 
     ##### check if device exist
     if [ -e /dev/$disk ]; then
-	echo "Device '$disk' exists"
+	echo -e $gre"OK"$def":      Device '/dev/$disk' exists"
 	##### check if device1 exists
 	if [ -e /dev/$disk"1" ]; then
-	    echo "Device '"$disk"1' exists"
+	    echo -e $gre"OK"$def":      Device '"$disk"1' exists"
 	    ##### check if disk is mounted
 	    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
-		echo "$disk is mounted"
-		##### unmount disk
-		if [ $test == "true" ]; then
-		    echo -e "--- Running in test-mode.\n    Will not unmount disk"
+		echo -e $gre"OK"$def":      $disk is mounted"
+		##### check if disk is in use
+		if lsof $mountPoint/$disk > /dev/null 2>&1; then
+		    echo -e $yel"WARNING"$def": Disk is in use\n         Will not unmount"
 		else
-		    umount $mountPoint/$disk
-		    ##### check if unmount was successful
-		    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
-			echo -e "ERROR: Could not unmount disk\n       Exiting ..."
-			exit 2
+		    ##### unmount disk
+		    if [ $test == "true" ]; then
+			echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not unmount disk"
 		    else
-			echo "Successfully unmounted"
+			umount $mountPoint/$disk
+			##### check if unmount was successful
+			if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
+			    echo -e "ERROR: Could not unmount disk\n       Exiting ..."
+			    exit 2
+			else
+			    echo -e $gre"OK"$def":      Successfully unmounted"
+			fi
 		    fi
 		fi
 	    else
-		echo "ERROR: $disk is not mounted"
+		echo -e $red"ERROR"$def":   $disk is not mounted"
 	    fi
 	    ##### mount disk
-	    if [ $test == "true" ]; then
-		echo -e "--- Running in test-mode.\n    Will not mount disk"
+	    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
+		echo -e $yel"WARNING"$def": Disk is already mounted\n         Will not mount"
 	    else
-		mount $mountPoint/$disk
-		##### check if disk was successfully mounted
-		if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
-		    echo "Successfully unmounted"
+		if [ $test == "true" ]; then
+		    echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not mount disk"
 		else
-		    echo -e "ERROR: Could not mount disk\n       Exiting ..."
-		    exit 3
+		    mount $mountPoint/$disk
+		    ##### check if disk was successfully mounted
+		    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
+			echo -e $gre"OK"$def":      Successfully unmounted"
+		    else
+			echo -e "ERROR: Could not mount disk\n       Exiting ..."
+			exit 3
+		    fi
 		fi
 	    fi
 	else
@@ -105,17 +120,17 @@ echo "Checking nfs server..."
 echo "----------"
 
 if systemctl is-active $serviceName --quiet; then
-    echo "Service '"$serviceName"' is running"
+    echo -e $gre"OK"$def":      Service '"$serviceName"' is running"
     if [ $test == "true" ]; then
-	echo -e "--- Running in test-mode.\n    Will not restart service"
+	echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not restart service"
     else
 	echo "Restarting ..."
 	service $serviceName restart
     fi
 else
-    echo "WARNING: Service '"$serviceName"' is not running"
+    echo -e $yel"WARNING"$def": Service '"$serviceName"' is not running"
     if [ $test == "true" ]; then
-	echo -e "--- Running in test-mode.\n    Will not start service"
+	echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not start service"
     else
 	echo "         Starting ..."
 	service $serviceName start
@@ -123,7 +138,7 @@ else
 fi
 
 if systemctl is-active $serviceName --quiet; then
-    echo "Started successfully"
+    echo -e $gre"OK"$def":      Started successfully"
 else
-    echo "ERROR: Service did not start"
+    echo -e $red"ERROR"$def":   Service did not start"
 fi

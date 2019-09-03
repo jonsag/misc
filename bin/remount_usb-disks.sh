@@ -71,6 +71,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 		    if [ $test == "true" ]; then
 			echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not unmount disk"
 		    else
+		    	echo "         Unmounting ..."
 			umount $mountPoint/$disk
 			##### check if unmount was successful
 			if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then
@@ -91,6 +92,7 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 		if [ $test == "true" ]; then
 		    echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not mount disk"
 		else
+			echo "         Mounting ..."
 		    mount $mountPoint/$disk
 		    ##### check if disk was successfully mounted
 		    if grep $mountPoint/$disk /etc/mtab > /dev/null 2>&1; then

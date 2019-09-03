@@ -106,10 +106,10 @@ for disk in "hg1" "io1" "sg1" "sg2" "wd1"; do
 		fi
 	    fi
 	else
-	    echo "ERROR: Device '"$disk"1' does not exist"
+	    echo -e $red"ERROR"$def":   Device '"$disk"1' does not exist"
 	fi
     else
-	echo "ERROR: Device '$disk' does not exist"
+	echo $red"ERROR"$def":   Device '$disk' does not exist"
     fi
 
 done
@@ -124,7 +124,7 @@ if systemctl is-active $serviceName --quiet; then
     if [ $test == "true" ]; then
 	echo -e $yel"NOTE"$def":    Running in test-mode.\n         Will not restart service"
     else
-	echo "Restarting ..."
+	echo "         Restarting ..."
 	service $serviceName restart
     fi
 else

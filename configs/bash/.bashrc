@@ -147,3 +147,8 @@ alias last-dirs="find . -maxdepth 1 -type d -printf '%T@ %p\0' | sort -zk 1nr | 
 
 alias last-files="find . -maxdepth 2 -type f -printf '%T@ %p\0' | sort -zk 1nr | sed -z 's/^[^ ]* //' | tr '\0' '\n' | head -n 20"
 
+# unpack, tar
+alias unpack-tar.gz='tar zxvf'
+alias unpack-tar.bz2='tar jxvf'
+alias unpack-tar='tar xvf'
+alias unpack-tar.xz='tar Jxvf'

@@ -34,7 +34,7 @@ print("-----------------------")
 for item in os.listdir(path):
     if os.path.isdir(os.path.join(path, item)):
         if item.endswith("-"):
-            dirs.append((item, "->", item.rstrip("-")))
+            dirs.append((item, "->", item[:-1]))
 
 if len(dirs) != 0:
     print("Affected directories:")
@@ -78,9 +78,11 @@ print("-----------------------")
 for item in os.listdir(path):
     if os.path.isdir(os.path.join(path, item)):
         # m = re.search(r'\-\d\d$', item)
-        if re.search(r'\-\d\d$', item) or re.search(r'\-\d\d\d\d$', item):
-            dirs.append((item, "->", item.split("-", 1)[0]))
-
+        if re.search(r'\-\d\d$', item):
+            dirs.append((item, "->", item[:-3]))
+        elif re.search(r'\-\d\d\d\d$', item):
+            dirs.append((item, "->", item[:-5]))
+            
 if len(dirs) != 0:
     print("Affected directories:")
     dirs.sort()

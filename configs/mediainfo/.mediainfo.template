@@ -1,6 +1,6 @@
 General;General\r\nFilename.............: %FileName%.%FileExtension%\r\nDuration.............: %Duration/String%\r\nSize.................: %FileSize/String%\r\nOverall bit rate.....: %OverallBitRate/String%\r\n\r\n
 
-Video;Video #%StreamKindID%\r\nID...................: %ID%\r\nCodec................: %Codec/String%\r\nResolution...........: %Width%x%Height%\nAspect ratio.........: %DisplayAspectRatio/String% (%DisplayAspectRatio%)\r\nStream size..........: %StreamSize/String3%\r\nBit rate.............: %BitRate/String%\r\nFrame rate...........: %FrameRate/String%\r\n\r\n
+Video;Video #%StreamKindID%\r\nID...................: %ID%\r\nCodec................: %Codec/String%\r\nResolution...........: %Width%x%Height%\nAspect ratio.........: %DisplayAspectRatio/String% (%DisplayAspectRatio%)\r\nStream size..........: %StreamSize/String3%\r\nBit rate.............: %BitRate/String%\r\nFrame rate...........: %FrameRate/String%\r\nFrame Count..........: %FrameCount%\r\n\r\n
 
 Audio;Audio #%StreamKindID%\r\nID...................: %ID%\r\nFormat...............: %Format% (%CodecID/Hint%) %MuxingMode%\r\nChannels.............: %Channel(s)/String%\r\nStream size..........: %StreamSize/String3%\r\nBit rate.............: %BitRate/String%\r\nSampling rate........: %SamplingRate/String%\r\nLanguage.............: %Language/String1%\r\n\r\n
 

@@ -31,6 +31,8 @@ AUDIO_BITRATE='96k'
 X265_PARAMETERS_PASS_1='-an -f null /dev/null'
 X265_PARAMETERS_PASS_2='-ac 1'
 
+LOG_LEVEL='-loglevel quiet -stats'
+
 echo "----------------------------------------------------------------------------------"
 echo "Output file name: $OUTFILE"
 echo
@@ -53,14 +55,14 @@ echo
 echo "First pass..."
 echo "----------------------------------------------------------------------------------"
 echo
-ffmpeg -y -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=1 $X265_PARAMETERS_PASS_1
+ffmpeg -y -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=1 $X265_PARAMETERS_PASS_1 $LOG_LEVEL
 
 
 echo
 echo "Second pass..."
 echo "----------------------------------------------------------------------------------"
 echo
-ffmpeg -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=2 -ac 1 -ar $AUDIO_SAMPLE_RATE -c:a $AUDIO_CODEC -b:a $AUDIO_BITRATE $OUTFILE
+ffmpeg -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=2 -ac 1 -ar $AUDIO_SAMPLE_RATE -c:a $AUDIO_CODEC -b:a $AUDIO_BITRATE $LOG_LEVEL $OUTFILE
 
 echo
 echo "Finished"

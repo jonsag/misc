@@ -33,6 +33,9 @@ X265_PARAMETERS_PASS_2='-ac 1'
 
 LOG_LEVEL='-loglevel quiet -stats'
 
+#NO_OF_FRAMES=$(ffprobe -select_streams v -show_streams $INFILE 2>/dev/null | grep nb_frames | sed -e 's/nb_frames=//')
+NO_OF_FRAMES=$(mediainfo --Inform='Video;%FrameCount%' $INFILE)
+
 echo "----------------------------------------------------------------------------------"
 echo "Output file name: $OUTFILE"
 echo
@@ -41,6 +44,8 @@ echo "Video bitrate: $VIDEO_BITRATE"
 echo
 echo "Audio codec: $AUDIO_CODEC"
 echo "Audio bitrate: $AUDIO_BITRATE"
+echo
+echo "No of frames: $NO_OF_FRAMES"
 echo "----------------------------------------------------------------------------------"
 
 echo
@@ -51,17 +56,14 @@ if [[ $REPLY =~ ^[Nn]$ ]]; then
     exit 0
 fi
 
-echo
 echo "First pass..."
 echo "----------------------------------------------------------------------------------"
-echo
 ffmpeg -y -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=1 $X265_PARAMETERS_PASS_1 $LOG_LEVEL
 
 
 echo
 echo "Second pass..."
 echo "----------------------------------------------------------------------------------"
-echo
 ffmpeg -i $INFILE -vf scale=$SCALE -c:v $VIDEO_CODEC -b:v $VIDEO_BITRATE -x265-params pass=2 -ac 1 -ar $AUDIO_SAMPLE_RATE -c:a $AUDIO_CODEC -b:a $AUDIO_BITRATE $LOG_LEVEL $OUTFILE
 
 echo
